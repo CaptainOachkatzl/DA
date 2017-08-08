@@ -48,8 +48,11 @@ namespace PlanetSimulation.Interface
 
         public void DrawStatusText()
         {
-            if(DrawStatus || DrawControls)
-                Parent.SpriteBatch.DrawString(Parent.DataFont, CreateStatusText(), new Vector2(GameGlobals.PlanetDataListInspacer, GameGlobals.PlanetDataListInspacer), Color.White);
+            if (DrawStatus || DrawControls)
+            {
+                string test = CreateStatusText();
+                Parent.SpriteBatch.DrawString(Parent.DataFont, test, new Vector2(GameGlobals.PlanetDataListInspacer, GameGlobals.PlanetDataListInspacer), Color.White);
+            }
         }
 
         private string CreateStatusText()
