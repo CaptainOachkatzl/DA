@@ -73,6 +73,13 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Cloo, Version=0.9.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Sourceforge.Cloo.0.9.1\lib\net35\Cloo.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="InputFunctionality">
+      <HintPath>..\..\..\..\Users\Dave\Documents\Visual Studio 2015\Projects\InputFunctionality\InputFunctionality\bin\x86\Release\InputFunctionality.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
       <Private>False</Private>
     </Reference>
@@ -121,6 +128,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EngineComponents\GraphicCardDistributionPool.cs" />
     <Compile Include="EngineComponents\MultiProcessingUnit.cs" />
     <Compile Include="Interface\CameraControl.cs" />
     <Compile Include="CameraComponents\UniverseCamera.cs" />
@@ -197,6 +205,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="PlanetSimulation_TemporaryKey.pfx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
