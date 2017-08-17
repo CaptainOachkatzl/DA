@@ -70,7 +70,7 @@ namespace PlanetSimulation.EngineComponents
         private string GetKernelSource()
         {
             // load opencl source
-            StreamReader streamReader = new StreamReader("kernels.cl");
+            StreamReader streamReader = new StreamReader("../../../../../../kernel.cl");
             string clSource = streamReader.ReadToEnd();
             streamReader.Close();
             return clSource;
