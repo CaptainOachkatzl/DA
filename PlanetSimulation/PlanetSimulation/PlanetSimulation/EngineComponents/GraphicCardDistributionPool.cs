@@ -22,10 +22,8 @@ namespace PlanetSimulation.EngineComponents
 
         ManualResetEvent m_resetEvent;
 
-        int m_vectorCount;
-        ComputeBuffer<float>[] m_vectorBuffers;
-        float[][] m_vectorArrays;
-
+        ComputeBuffer<float> m_inputBuffer;
+        ComputeBuffer<float> m_outputBuffer;
 
         public override int NodeCount
         {
@@ -37,10 +35,6 @@ namespace PlanetSimulation.EngineComponents
 
         public GraphicCardDistributionPool()
         {
-            m_vectorCount = 4;
-
-            m_stackCalculation = new SharedMemoryStackCalculation<Planet, GameTime>(CalculateSinglePair);
-
             m_resetEvent = new ManualResetEvent(false);
 
             m_platform = ComputePlatform.Platforms[0];
@@ -56,15 +50,6 @@ namespace PlanetSimulation.EngineComponents
             program.Build(null, null, null, IntPtr.Zero);
 
             m_kernelProgram = program.CreateKernel(FUNCTION_NAME);
-
-            m_vectorArrays = new float[m_vectorCount][];
-            m_vectorBuffers = new ComputeBuffer<float>[m_vectorCount];
-            for (int i = 0; i < m_vectorCount; i++)
-            {
-                m_vectorArrays[i] = new float[2];
-                m_vectorBuffers[i] = new ComputeBuffer<float>(m_context, ComputeMemoryFlags.UseHostPointer, m_vectorArrays[i]);
-                m_kernelProgram.SetMemoryArgument(i, m_vectorBuffers[i]);
-            }
         }
 
         private string GetKernelSource()
@@ -80,49 +65,101 @@ namespace PlanetSimulation.EngineComponents
         {
             m_resetEvent.Reset();
 
-            //new Thread( () => {
-            m_kernelProgram.SetValueArgument(6, GameGlobals.SimulationSpeedMuliplicator);
-            m_kernelProgram.SetValueArgument(7, (float)calculationPair.GlobalData.ElapsedGameTime.TotalSeconds);
+            //new Thread(() => {
 
-            m_stackCalculation.Calculate(calculationPair);
+            InitializeData(calculationPair);
+
+            if (calculationPair.CalculateInternally)
+            {
+                for (int i = 0; i < calculationPair.Stack1.Length; i++)
+                    for (int j = i + 1; j < calculationPair.Stack1.Length; j++)
+                        CalculateSinglePair(i, j);
+
+                for (int i = 0; i < calculationPair.Stack2.Length; i++)
+                    for (int j = i + 1; j < calculationPair.Stack2.Length; j++)
+                        CalculateSinglePair(calculationPair.Stack1.Length + i, calculationPair.Stack1.Length + j);
+            }
+
+            for (int i = 0; i < calculationPair.Stack1.Length; i++)
+            {
+                for (int j = 0; j < calculationPair.Stack2.Length; j++)
+                {
+                    CalculateSinglePair(i, calculationPair.Stack1.Length + j);
+                }
+            }
+
+            ApplyResult(calculationPair);
+
+            CleanUp();
 
             m_resetEvent.Set();
+
             //}).Start();
         }
 
-        private void CalculateSinglePair(Planet planet1, Planet planet2, GameTime gameTime)
+        private void InitializeData(CalculationPair<Planet, GameTime> calculationPair)
         {
-            WriteVectorParameter(0, planet1.Position);
-            WriteVectorParameter(1, planet2.Position);
-            WriteVectorParameter(2, planet1.Direction);
-            WriteVectorParameter(3, planet2.Direction);
-            m_kernelProgram.SetValueArgument(4, planet1.Mass);
-            m_kernelProgram.SetValueArgument(5, planet2.Mass);
+            int size = calculationPair.Stack1.Length + calculationPair.Stack2.Length;
+            InputTransformationArray input = new InputTransformationArray(size, 3);
+            OutputTransformationArray output = new OutputTransformationArray(size, 2);
+
+            for (int i = 0; i < calculationPair.Stack1.Length; i++)
+            {
+                input.SetPlanet(i, calculationPair.Stack1[i]);
+                output.SetPlanet(i, calculationPair.Stack1[i]);
+            }
+
+            for (int i = 0; i < calculationPair.Stack2.Length; i++)
+            {
+                input.SetPlanet(i + calculationPair.Stack1.Length, calculationPair.Stack2[i]);
+                output.SetPlanet(i + calculationPair.Stack1.Length, calculationPair.Stack2[i]);
+            }
+
+            m_inputBuffer = new ComputeBuffer<float>(m_context, ComputeMemoryFlags.UseHostPointer, input.GetDataArray());
+            m_outputBuffer = new ComputeBuffer<float>(m_context, ComputeMemoryFlags.UseHostPointer, output.GetDataArray());
+
+            m_kernelProgram.SetMemoryArgument(0, m_outputBuffer);
+            m_kernelProgram.SetMemoryArgument(1, m_inputBuffer);
+            m_kernelProgram.SetValueArgument(2, GameGlobals.SimulationSpeedMuliplicator);
+            m_kernelProgram.SetValueArgument(3, (float)calculationPair.GlobalData.ElapsedGameTime.TotalSeconds);
+        }
+
+        private void CalculateSinglePair(int index1, int index2)
+        {
+            m_kernelProgram.SetValueArgument(4, index1);
+            m_kernelProgram.SetValueArgument(5, index2);
 
             m_queue.ExecuteTask(m_kernelProgram, null);
+        }
+
+        private void ApplyResult(CalculationPair<Planet, GameTime> calculationPair)
+        {
+            int size = calculationPair.Stack1.Length + calculationPair.Stack2.Length;
+
+            float[] result = new float[2 * size];
 
             m_queue.Finish();
 
-            m_queue.ReadFromBuffer(m_vectorBuffers[2], ref m_vectorArrays[2], true, null);
-            m_queue.ReadFromBuffer(m_vectorBuffers[3], ref m_vectorArrays[3], true, null);
+            m_queue.ReadFromBuffer(m_outputBuffer, ref result, true, null);
 
-            planet1.Direction = new Vector2(m_vectorArrays[2][0], m_vectorArrays[2][1]);
-            planet2.Direction = new Vector2(m_vectorArrays[3][0], m_vectorArrays[3][1]);
+            for (int i = 0; i < calculationPair.Stack1.Length; i++)
+            {
+                calculationPair.Stack1[i].Direction = new Vector2(result[2 * i], result[2 * i + 1]);
+            }
+
+            for (int i = 0; i < calculationPair.Stack2.Length; i++)
+            {
+                calculationPair.Stack2[i].Direction = 
+                    new Vector2(
+                        result[2 * calculationPair.Stack1.Length + (2 * i)], 
+                        result[2 * calculationPair.Stack1.Length + (2 * i + 1)]);
+            }
         }
 
-        private void WriteVectorParameter(int arrayIndex, Vector2 vector)
+        private void CleanUp()
         {
-            m_vectorArrays[arrayIndex][0] = vector.X;
-            m_vectorArrays[arrayIndex][1] = vector.Y;
-            m_queue.WriteToBuffer(m_vectorArrays[arrayIndex], m_vectorBuffers[arrayIndex], true, null);
-        }
-
-        private float[] AddVectorParameter(int index, ComputeMemoryFlags flags, Vector2 vector)
-        {
-            float[] allocatedValues = new float[2] { vector.X, vector.Y };
-            ComputeBuffer<float> buffer = new ComputeBuffer<float>(m_context, flags, allocatedValues);
-            m_kernelProgram.SetMemoryArgument(index, buffer);
-            return allocatedValues;
+            m_inputBuffer.Dispose();
+            m_outputBuffer.Dispose();
         }
 
         public override void Synchronize()

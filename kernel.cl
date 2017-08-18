@@ -1,30 +1,58 @@
-void PrintFloat2(float2 vec, __constant char * name)
+void PrintFloat2(float2 vec)
 {
-	printf("%s", name);
-	printf(" - %.10f, %.10f\n", vec.x, vec.y);
+	printf("%.10f, %.10f\n", vec.x, vec.y);
+}
+
+void Gravity(
+	__global float2 * out_dir1, 
+	__global float2 * out_dir2,
+	__constant float2 * pos1, float mass1,
+	__constant float2 * pos2, float mass2,
+	float simSpeed, float elapsedTime)
+{
+	float2 directionVec = *pos2 - *pos1;
+
+	float dis = length(directionVec);
+	if(!dis)
+		return;
+		
+	dis = dis * dis;
+	
+	float acceleration = 0.0000000000000000667408F * simSpeed / dis * elapsedTime;
+	
+	directionVec = normalize(directionVec) * acceleration;
+
+	(*out_dir1) += (directionVec * mass2);
+	(*out_dir2) -= (directionVec * mass1);
 }
 
 
-__kernel void CalculateGravity(__constant float * pos1, __constant float * pos2,
-	__global float * out_dir1, __global float * out_dir2,
-	float mass1, float mass2,
-	float simSpeed, float elapsedTime) 
+__kernel void CalculateGravity(
+	__global float * output,
+	__constant float * input,
+	float simSpeed, float elapsedTime,
+	int index1, int index2) 
 {
-	float2 pos1Vec;
-	pos1Vec.x = pos1[0];
-	pos1Vec.y = pos1[1];
+	__constant float2 * pos1 = (__constant float2 *)(input + 3 * index1);
+	__constant float2 * pos2 = (__constant float2 *)(input + 3 * index2);
+	__global float2 * dir1 = (__global float2 *)(output + 2 * index1);
+	__global float2 * dir2 = (__global float2 *)(output + 2 * index2);
+	__constant float * mass1 = (__constant float2 *)(input + 3 * index1 + 2);
+	__constant float * mass2 = (__constant float2 *)(input + 3 * index2 + 2);
+
+	//PrintFloat2(*pos1);
+	//printf("%.10f", *mass1);
+
+	Gravity(dir1, dir2, pos1, *mass1, pos2, *mass2, simSpeed, elapsedTime);
 	
-	float2 pos2Vec;
-	pos2Vec.x = pos2[0];
-	pos2Vec.y = pos2[1];
 	
-	float2 dir1Vec;
+	/*float2 dir1Vec;
 	dir1Vec.x = out_dir1[0];
 	dir1Vec.y = out_dir1[1];
 	
 	float2 dir2Vec;
 	dir2Vec.x = out_dir2[0];
-	dir2Vec.y = out_dir2[1];
+	dir2Vec.y = out_dir2[1];*/
 
 	/*PrintFloat2(pos1Vec, "pos1");
 	PrintFloat2(pos2Vec, "pos2");
@@ -35,36 +63,5 @@ __kernel void CalculateGravity(__constant float * pos1, __constant float * pos2,
 	printf("simSpeed - %f \n", simSpeed);
 	printf("elapsedTime - %f \n", elapsedTime);*/
 
-	float2 directionVec = pos2Vec - pos1Vec;
 	
-	//PrintFloat2(directionVec, "distanceVec");
-	
-	float dis = length(directionVec);
-	if(!dis)
-		return;
-		
-	//printf("distance - %f \n", dis);
-		
-	dis = dis * dis;
-	
-	//printf("disSquared - %f \n", dis);
-	
-	float acceleration = 0.0000000000000000667408F * simSpeed / dis * elapsedTime;
-	
-	//printf("acceleration - %.10f \n", acceleration);
-	
-	directionVec = normalize(directionVec) * acceleration;
-	
-	//PrintFloat2(directionVec, "normalized accelerated direction");
-	
-	dir1Vec += (directionVec * mass1);
-	dir2Vec -= (directionVec * mass2);
-	
-	//PrintFloat2(dir1Vec, "result dir1");
-	//PrintFloat2(dir2Vec, "result dir2");
-	
-	out_dir1[0]= dir1Vec.x;
-	out_dir1[1]= dir1Vec.y;
-	out_dir2[0]= dir2Vec.x;
-	out_dir2[1]= dir2Vec.y;
 }

@@ -129,6 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EngineComponents\GraphicCardDistributionPool.cs" />
+    <Compile Include="EngineComponents\DataTransformationArray.cs" />
     <Compile Include="EngineComponents\MultiProcessingUnit.cs" />
     <Compile Include="Interface\CameraControl.cs" />
     <Compile Include="CameraComponents\UniverseCamera.cs" />
