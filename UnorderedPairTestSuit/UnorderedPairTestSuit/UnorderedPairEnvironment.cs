@@ -28,7 +28,7 @@ namespace UnorderedPairTestSuit
         protected override void Initializing()
         {
             m_pool = new ActorPool<CalculationDummy, double>(4, false);
-            m_distribution = new ResourceLockDistribution<CalculationDummy, double>(4, DummyCalculation);
+            m_distribution = new ResourceLockDistribution<CalculationDummy, double>(m_pool);
 
             m_pool.SetCalculationFunction(DummyCalculation);
         }
