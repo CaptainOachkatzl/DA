@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using XSLibrary.MultithreadingPatterns.UniquePair.DistributionNodes;
 using Cloo;
 using XSLibrary.MultithreadingPatterns.UniquePair;
 using System.IO;
@@ -164,6 +163,12 @@ namespace PlanetSimulation.EngineComponents
 
         public override void Synchronize()
         {
+            m_resetEvent.WaitOne();
+        }
+
+        public override void Synchronize(int nodeIndex)
+        {
+            // TODO
             m_resetEvent.WaitOne();
         }
 

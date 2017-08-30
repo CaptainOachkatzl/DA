@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlanetSimulation", "PlanetSimulation\PlanetSimulation\PlanetSimulation.csproj", "{849704A9-D5D2-44A6-9052-B58BB684BBFE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D1BDAF08-CFFF-47F7-8114-2E7105EB1493} = {D1BDAF08-CFFF-47F7-8114-2E7105EB1493}
+		{015062DF-869A-4D9C-AAA4-2139ADDBA7ED} = {015062DF-869A-4D9C-AAA4-2139ADDBA7ED}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlanetSimulationContent", "PlanetSimulation\PlanetSimulationContent\PlanetSimulationContent.contentproj", "{F5D969F6-E447-49CA-BCBC-BB30E065E4A7}"
 EndProject

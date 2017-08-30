@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using XSLibrary.MultithreadingPatterns.UniquePair.DistributionNodes;
 
 namespace XSLibrary.MultithreadingPatterns.UniquePair
 {

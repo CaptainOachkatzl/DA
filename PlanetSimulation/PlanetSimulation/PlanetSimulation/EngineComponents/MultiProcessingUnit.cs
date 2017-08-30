@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using System.Management;
 using XSLibrary.MultithreadingPatterns.UniquePair;
-using XSLibrary.MultithreadingPatterns.UniquePair.DistributionNodes;
 
 namespace PlanetSimulation.EngineComponents
 {
@@ -35,13 +34,13 @@ namespace PlanetSimulation.EngineComponents
 
         public MultiProcessingUnit(PlanetSim parent)
         {
-            CoreCount = GetCoreCount();
-            m_graphicCardPool = new GraphicCardDistributionPool();
-            m_distributionPool = new ActorPool<Planet, GameTime>(CoreCount, false);
-            m_pairDistribution = new RoundRobinTournamentDistribution<Planet, GameTime>(m_graphicCardPool);
-
             GravityHandler = parent.GravityHandler;
             CollisionHandler = parent.CollisionHandler;
+
+            CoreCount = GetCoreCount();
+            m_graphicCardPool = new GraphicCardDistributionPool();
+            m_distributionPool = new ActorPool<Planet, GameTime>(2, false);
+            m_pairDistribution = new ResourceLockDistribution<Planet, GameTime>(m_distributionPool);
         }
         public void Close()
         {
@@ -52,8 +51,8 @@ namespace PlanetSimulation.EngineComponents
         {
             m_distributionPool.SetCalculationFunction(GravityHandler.CalculateGravity);
             m_pairDistribution.Calculate(allPlanets.ToArray(), currentGameTime);
-            //m_distributionPool.SetCalculationFunction(CollisionHandler.CalculateCollision);
-            //m_pairDistribution.Calculate(allPlanets.ToArray(), currentGameTime);
+            m_distributionPool.SetCalculationFunction(CollisionHandler.CalculateCollision);
+            m_pairDistribution.Calculate(allPlanets.ToArray(), currentGameTime);
         }
 
         private int GetCoreCount()

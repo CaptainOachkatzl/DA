@@ -1,6 +1,5 @@
 ﻿using XSLibrary.UnitTests;
 using XSLibrary.MultithreadingPatterns.UniquePair;
-using XSLibrary.MultithreadingPatterns.UniquePair.DistributionNodes;
 using System.Collections.Generic;
 using System.Threading;
 using XSLibrary.Utility;
@@ -9,7 +8,7 @@ namespace UnorderedPairTestSuit
 {
     class UnorderedPairEnvironment : UnitTest
     {
-        RoundRobinTournamentDistribution<CalculationDummy, double> m_distribution;
+        UniquePairDistribution<CalculationDummy, double> m_distribution;
         SharedMemoryPool<CalculationDummy, double> m_pool;
 
         List<CalculationDummy> m_dummies;
@@ -29,7 +28,7 @@ namespace UnorderedPairTestSuit
         protected override void Initializing()
         {
             m_pool = new ActorPool<CalculationDummy, double>(4, false);
-            m_distribution = new RoundRobinTournamentDistribution<CalculationDummy, double>(m_pool);
+            m_distribution = new ResourceLockDistribution<CalculationDummy, double>(4, DummyCalculation);
 
             m_pool.SetCalculationFunction(DummyCalculation);
         }
