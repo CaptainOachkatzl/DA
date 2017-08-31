@@ -25,9 +25,9 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
         PartType[][] Stacks { get; set; }
         GlobalDataType GlobalData { get; set; }
 
-        public RoundRobinTournamentDistribution(DistributionPool<PartType, GlobalDataType> pool) : base(pool)
+        public RoundRobinTournamentDistribution(CorePool<PartType, GlobalDataType> pool) : base(pool)
         {
-            PairLogic = new PairingLogic(pool.NodeCount); // needs to be initialized first so all the variables used are intiialized as well
+            PairLogic = new PairingLogic(pool.CoreCount); // needs to be initialized first so all the variables used are intiialized as well
 
             Stacks = new PartType[StackCount][];
         }
@@ -45,7 +45,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
 
         public override void Dispose()
         {
-            m_distributionPool.Dispose();
+            m_corePool.Dispose();
         }
 
         private void CreateStacks(PartType[] parts)
@@ -77,10 +77,10 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
         {
             for (int i = 0; i < PairLogic.ThreadCount; i++)
             {
-                m_distributionPool.DistributeCalculation(i, CreateCalculationPair(i, step));
+                m_corePool.DistributeCalculation(i, CreateCalculationPair(i, step));
             }
 
-            m_distributionPool.Synchronize();
+            m_corePool.Synchronize();
         }
 
         private CalculationPair<PartType, GlobalDataType> CreateCalculationPair(int threadID, int step)

@@ -2,14 +2,16 @@
 
 namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
-    public abstract partial class DistributionPool<PartType, GlobalDataType> : IDisposable
+    public abstract partial class CorePool<PartType, GlobalDataType> : IDisposable
     {
         public delegate void NodesChangedHandler(object sender, EventArgs e);
         public event NodesChangedHandler OnNodesChanged;
 
-        public abstract int NodeCount { get; }
+        public abstract int CoreCount { get; }
 
         public abstract void DistributeCalculation(int nodeIndex, CalculationPair<PartType, GlobalDataType> calculationPair);
+
+        public abstract void SetUsableCores(int coreCount);
 
         public abstract void Synchronize();
         public abstract void Synchronize(int nodeIndex);

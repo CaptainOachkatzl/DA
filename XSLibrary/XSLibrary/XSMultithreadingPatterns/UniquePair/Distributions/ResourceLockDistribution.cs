@@ -13,7 +13,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
             public ManualResetEvent[] waitHandles;
         }
 
-        public ResourceLockDistribution(DistributionPool<PartType, GlobalDataType> pool) : base(pool)
+        public ResourceLockDistribution(CorePool<PartType, GlobalDataType> pool) : base(pool)
         {
         }
 
@@ -23,11 +23,11 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
             for (int i = 0; i < parts.Length; i++)
                 locks[i] = new Semaphore(1, 1);
 
-            ManualResetEvent[] waitHandles = new ManualResetEvent[m_distributionPool.NodeCount];
-            for (int i = 0; i < m_distributionPool.NodeCount; i++)
+            ManualResetEvent[] waitHandles = new ManualResetEvent[m_corePool.CoreCount];
+            for (int i = 0; i < m_corePool.CoreCount; i++)
                 waitHandles[i] = new ManualResetEvent(false);
 
-            for (int i = 0; i < m_distributionPool.NodeCount; i++)
+            for (int i = 0; i < m_corePool.CoreCount; i++)
             {
                 DataWrap data = new DataWrap();
                 data.threadID = i;
@@ -47,7 +47,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
 
             for (int i = 0; i < data.parts.Length; i++)
             {
-                if (i % m_distributionPool.NodeCount != data.threadID)
+                if (i % m_corePool.CoreCount != data.threadID)
                     continue;
 
                 data.locks[i].WaitOne();
@@ -56,11 +56,11 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
                 {
                     data.locks[j].WaitOne();
 
-                    m_distributionPool.DistributeCalculation(
+                    m_corePool.DistributeCalculation(
                         data.threadID, 
                         new CalculationPair<PartType, GlobalDataType>(new PartType[1] { data.parts[i] } , new PartType[1] { data.parts[j] }, data.global, false));
 
-                    m_distributionPool.Synchronize(data.threadID);
+                    m_corePool.Synchronize(data.threadID);
                     data.locks[j].Release();
                 }
                
@@ -72,7 +72,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
 
         public override void Dispose()
         {
-            m_distributionPool.Dispose();
+            m_corePool.Dispose();
         }
     }
 }

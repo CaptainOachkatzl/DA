@@ -47,7 +47,7 @@
     <Compile Include="UniquePair\CalculationPair.cs" />
     <Compile Include="UniquePair\CalculationNodes\DistributionNode.cs" />
     <Compile Include="UniquePair\CalculationNodes\DistributionPool.cs" />
-    <Compile Include="UniquePair\CalculationNodes\SharedMemoryPool.cs" />
+    <Compile Include="UniquePair\CalculationNodes\SharedMemoryCores.cs" />
     <Compile Include="UniquePair\CalculationNodes\SystemHandledThreadPool.cs" />
     <Compile Include="UniquePair\Distributions\ResourceLockDistribution.cs" />
     <Compile Include="UniquePair\PairingLogic.cs" />

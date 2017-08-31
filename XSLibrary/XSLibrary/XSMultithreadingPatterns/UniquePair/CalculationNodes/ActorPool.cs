@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Threading;
 
 namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
-    public partial class ActorPool<PartType, GlobalDataType> : SharedMemoryPool<PartType, GlobalDataType>
+    public partial class ActorPool<PartType, GlobalDataType> : SharedMemoryCores<PartType, GlobalDataType>
     {
-        public override int NodeCount { get { return PoolSize; } }
+        public override int CoreCount { get { return PoolSize; } }
         private int PoolSize { get; set; }
         public bool FixedCores { get; private set; }
         ActorNode[] Actors { get; set; }
@@ -20,6 +19,11 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
         public override void DistributeCalculation(int nodeIndex, CalculationPair<PartType, GlobalDataType> calculationPair)
         {
             Actors[nodeIndex].CalculateStacks(calculationPair);
+        }
+
+        public override void SetUsableCores(int coreCount)
+        {
+            throw new NotImplementedException();
         }
 
         public override void Dispose()

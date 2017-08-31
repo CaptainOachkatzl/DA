@@ -43,10 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArithmeticAverageTest.cs" />
     <Compile Include="CalculationDummies\CalculationDummy.cs" />
+    <Compile Include="CalculationDummies\ValidationDummy.cs" />
+    <Compile Include="TestCases\OutputValidation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnorderedPairEnvironment.cs" />
+    <Compile Include="TestCases\UniquePairTest.cs" />
+    <Compile Include="TestCases\UniquePairTest_Dummy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

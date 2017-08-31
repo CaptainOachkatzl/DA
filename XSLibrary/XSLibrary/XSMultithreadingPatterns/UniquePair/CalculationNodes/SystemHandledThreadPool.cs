@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
-    public class SystemHandledThreadPool<PartType, GlobalDataType> : SharedMemoryPool<PartType, GlobalDataType>
+    public class SystemHandledThreadPool<PartType, GlobalDataType> : SharedMemoryCores<PartType, GlobalDataType>
     {
         class ThreadCalculationData
         {
@@ -11,7 +11,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
             public ManualResetEvent m_resetEvent;
         }
 
-        public override int NodeCount { get { return ThreadCount; } }
+        public override int CoreCount { get { return ThreadCount; } }
         int ThreadCount { get; set; }
 
         public SystemHandledThreadPool(int threadCount) : base(threadCount)
@@ -35,6 +35,11 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
             ThreadCalculationData data = state as ThreadCalculationData;
             CalculationLogic.Calculate(data.m_pair);
             data.m_resetEvent.Set();
+        }
+
+        public override void SetUsableCores(int coreCount)
+        {
+            throw new NotImplementedException();
         }
 
         public override void Dispose()

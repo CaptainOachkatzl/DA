@@ -1,19 +1,18 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 
 namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
-    abstract public class SharedMemoryPool<PartType, GlobalDataType> : DistributionPool<PartType, GlobalDataType>
+    abstract public class SharedMemoryCores<PartType, GlobalDataType> : CorePool<PartType, GlobalDataType>
     {
         protected ManualResetEvent[] ResetEvents { get; set; }
         protected SharedMemoryStackCalculation<PartType, GlobalDataType> CalculationLogic { get; private set; }
 
-        public SharedMemoryPool(int nodeCount)
+        public SharedMemoryCores(int coreCount)
         {
             CalculationLogic = new SharedMemoryStackCalculation<PartType, GlobalDataType>();
 
-            ResetEvents = new ManualResetEvent[nodeCount];
-            for (int i = 0; i < nodeCount; i++)
+            ResetEvents = new ManualResetEvent[coreCount];
+            for (int i = 0; i < coreCount; i++)
             {
                 ResetEvents[i] = new ManualResetEvent(true);
             }
