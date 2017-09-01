@@ -29,7 +29,7 @@ namespace XSLibrary.MultithreadingPatterns.Actor
         private void Initialize()
         {
             m_abort = false;
-            m_limit = new Semaphore(m_queue.Count, 1000000);
+            m_limit = new Semaphore(m_queue.Count, int.MaxValue);
         }
 
         private void StartThread()

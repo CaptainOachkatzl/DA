@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnorderedPairTestSuit", "UnorderedPairTestSuit\UnorderedPairTestSuit.csproj", "{F9C2B37B-7527-47D0-943C-9C9B3A121D3A}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XSUnitTests", "..\XSLibrary\XSLibrary\XSUnitTests\XSUnitTests.csproj", "{D1312ADE-2808-4030-A432-75A8406DCEC7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XSUtility", "..\XSLibrary\XSLibrary\XSUtility\XSUtility.csproj", "{A37C8BF1-08E7-46BB-8F9E-536A82365FED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XSThreadSafety", "..\XSLibrary\XSLibrary\XSThreadSafety\XSThreadSafety.csproj", "{1364168D-0353-49F5-9DAC-2A501FD8055A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,8 +35,15 @@ Global
 		{A37C8BF1-08E7-46BB-8F9E-536A82365FED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A37C8BF1-08E7-46BB-8F9E-536A82365FED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A37C8BF1-08E7-46BB-8F9E-536A82365FED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1364168D-0353-49F5-9DAC-2A501FD8055A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1364168D-0353-49F5-9DAC-2A501FD8055A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1364168D-0353-49F5-9DAC-2A501FD8055A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1364168D-0353-49F5-9DAC-2A501FD8055A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {63EFA754-CE38-4FFC-89D2-8B64188C7FA3}
 	EndGlobalSection
 EndGlobal

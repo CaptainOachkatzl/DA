@@ -9,7 +9,7 @@ namespace UnorderedPairTestSuit
         UniquePairDistribution<PartType, GlobalType> Distribution { get; set; }
         SharedMemoryCores<PartType, GlobalType> Pool { get { return Distribution.CorePool as SharedMemoryCores<PartType, GlobalType>; } }
 
-        protected PartType[] m_parts { get; set; }
+        protected PartType[] m_elements { get; set; }
         protected GlobalType m_globalData { get; set; }
 
         public UniquePairTest(UniquePairDistribution<PartType, GlobalType> distribution)
@@ -28,7 +28,7 @@ namespace UnorderedPairTestSuit
 
         protected override void TestRoutine(TestResult result)
         {
-            Distribution.Calculate(m_parts, m_globalData);
+            Distribution.Calculate(m_elements, m_globalData);
 
             result.Successful = true;
         }

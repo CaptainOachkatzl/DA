@@ -2,35 +2,34 @@
 {
     class ValidationDummy
     {
-        int[] m_wasCalculatedWith;
-        int m_elementCount;
+        int[] m_calculatedWith;
+        public int ElementCount { get { return m_calculatedWith.Length; } }
         public int ElementIndex { get; private set; }
 
         public ValidationDummy(int elementCount, int index)
         {
-            m_elementCount = elementCount;
             ElementIndex = index;
-            m_wasCalculatedWith = new int[elementCount];
+            m_calculatedWith = new int[elementCount];
 
-            for (int i = 0; i < m_elementCount; i++)
+            for (int i = 0; i < ElementCount; i++)
             {
-                m_wasCalculatedWith[i] = 0;
+                m_calculatedWith[i] = 0;
             }
         }
 
         public void SetCalculatedWithElement(int otherElementIndex)
         {
-            m_wasCalculatedWith[otherElementIndex]++;
+            m_calculatedWith[otherElementIndex]++;
         }
 
         public bool Valid()
         {
-            for (int i = 0; i < m_elementCount; i++)
+            for (int i = 0; i < ElementCount; i++)
             {
-                if (m_wasCalculatedWith[i] > 1)
+                if (m_calculatedWith[i] > 1)
                     return false;
 
-                if ((i == ElementIndex) == (m_wasCalculatedWith[i] == 1))
+                if ((i == ElementIndex) == (m_calculatedWith[i] == 1))
                     return false;
             }
 

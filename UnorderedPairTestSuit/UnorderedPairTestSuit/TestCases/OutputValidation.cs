@@ -7,9 +7,9 @@ namespace UnorderedPairTestSuit
     {
         public OutputValidation(UniquePairDistribution<ValidationDummy, int> distribution, int elementCount) : base(distribution)
         {
-            m_parts = new ValidationDummy[elementCount];
+            m_elements = new ValidationDummy[elementCount];
             for (int i = 0; i < elementCount; i++)
-                m_parts[i] = new ValidationDummy(elementCount, i);
+                m_elements[i] = new ValidationDummy(elementCount, i);
         }
 
         protected override void CalculationFunction(ValidationDummy part1, ValidationDummy part2, int global)
@@ -27,9 +27,9 @@ namespace UnorderedPairTestSuit
 
         private bool Valid()
         {
-            for (int i = 0; i < m_parts.Length; i++)
+            for (int i = 0; i < m_elements.Length; i++)
             {
-                if (!m_parts[i].Valid())
+                if (!m_elements[i].Valid())
                     return false;
             }
 

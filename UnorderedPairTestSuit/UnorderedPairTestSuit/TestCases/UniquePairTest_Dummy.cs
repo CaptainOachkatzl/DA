@@ -7,10 +7,10 @@ namespace UnorderedPairTestSuit
     {
         public UniquePairTest_Dummy(UniquePairDistribution<CalculationDummy, int> distribution, int dummyCount) : base(distribution)
         {
-            m_parts = new CalculationDummy[dummyCount];
+            m_elements = new CalculationDummy[dummyCount];
             for (int i = 0; i < dummyCount; i++)
             {
-                m_parts[i] = new CalculationDummy();
+                m_elements[i] = new CalculationDummy();
             }
         }
 
