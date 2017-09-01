@@ -4,16 +4,17 @@ using XSLibrary.Utility;
 
 namespace UnorderedPairTestSuit
 {
-    class ArithmeticAverageTest<PartType, GlobalType>
+    class PerformanceTest<PartType, GlobalType>
     {
         UniquePairTest<PartType, GlobalType> m_test;
         int m_loopCount;
         Logger Log = new LoggerConsole();
 
-        public ArithmeticAverageTest(int loopCount, UniquePairTest<PartType, GlobalType> test)
+        public PerformanceTest(int loopCount, UniquePairTest<PartType, GlobalType> test)
         {
             m_loopCount = loopCount;
             m_test = test;
+            m_test.m_log = new NoLog();
         }
 
         public void Run()
