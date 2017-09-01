@@ -9,7 +9,7 @@ namespace XSLibrary.UnitTests
         public string TestName { get; protected set; } = "Default";
 
         protected Stopwatch m_stopWatch;
-        protected Logger m_log;
+        public Logger m_log;
 
         public UnitTest()
         {
