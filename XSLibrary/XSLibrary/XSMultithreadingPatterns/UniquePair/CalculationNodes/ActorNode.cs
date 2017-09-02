@@ -7,7 +7,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
     public partial class ActorPool<PartType, GlobalDataType> : SharedMemoryCores<PartType, GlobalDataType>
     {
-        public class ActorNode : DistributionNode
+        public class ActorNode : CalculationCore
         {
             Thread m_thread;
             Semaphore m_lock;
@@ -67,7 +67,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
                 }
             }
 
-            public override void CalculateStacks(PairingData<PartType, GlobalDataType> calculationPair)
+            public override void CalculatePairedData(PairingData<PartType, GlobalDataType> calculationPair)
             {
                 m_resource = calculationPair;
                 m_resetEvent.Reset();
