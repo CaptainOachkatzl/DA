@@ -7,6 +7,7 @@ namespace UnorderedPairTestSuit
     {
         public OutputValidation(UniquePairDistribution<ValidationDummy, int> distribution, int elementCount) : base(distribution)
         {
+            // initialize the validation objects
             m_elements = new ValidationDummy[elementCount];
             for (int i = 0; i < elementCount; i++)
                 m_elements[i] = new ValidationDummy(elementCount, i);
@@ -27,6 +28,7 @@ namespace UnorderedPairTestSuit
 
         private bool Valid()
         {
+            // check every validation object and return true if all are valid
             for (int i = 0; i < m_elements.Length; i++)
             {
                 if (!m_elements[i].Valid())

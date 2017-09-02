@@ -7,7 +7,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
     {
         class ThreadCalculationData
         {
-            public CalculationPair<PartType, GlobalDataType> m_pair;
+            public PairingData<PartType, GlobalDataType> m_pair;
             public ManualResetEvent m_resetEvent;
         }
 
@@ -19,7 +19,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
             ThreadCount = threadCount;
         }
 
-        public override void DistributeCalculation(int nodeIndex, CalculationPair<PartType, GlobalDataType> calculationPair)
+        public override void DistributeCalculation(int nodeIndex, PairingData<PartType, GlobalDataType> calculationPair)
         {
             ResetEvents[nodeIndex].Reset();
             ThreadCalculationData data = new ThreadCalculationData()

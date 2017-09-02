@@ -58,7 +58,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
 
                     m_corePool.DistributeCalculation(
                         data.threadID, 
-                        new CalculationPair<PartType, GlobalDataType>(new PartType[1] { data.parts[i] } , new PartType[1] { data.parts[j] }, data.global, false));
+                        new PairingData<PartType, GlobalDataType>(new PartType[1] { data.parts[i] } , new PartType[1] { data.parts[j] }, data.global, false));
 
                     m_corePool.Synchronize(data.threadID);
                     data.locks[j].Release();
