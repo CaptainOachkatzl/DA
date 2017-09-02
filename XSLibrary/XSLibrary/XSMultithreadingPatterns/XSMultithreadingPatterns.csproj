@@ -50,6 +50,7 @@
     <Compile Include="UniquePair\CalculationNodes\SharedMemoryCores.cs" />
     <Compile Include="UniquePair\CalculationNodes\SystemHandledThreadPool.cs" />
     <Compile Include="UniquePair\Distributions\ResourceLockDistribution.cs" />
+    <Compile Include="UniquePair\Distributions\SingleThreadReference.cs" />
     <Compile Include="UniquePair\PairingLogic.cs" />
     <Compile Include="UniquePair\StackCalculationAlgorithms\SharedMemoryStackCalculation.cs" />
     <Compile Include="UniquePair\UniquePairDistribution.cs" />

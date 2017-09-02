@@ -11,7 +11,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
         {
             Thread m_thread;
             Semaphore m_lock;
-            CalculationPair<PartType, GlobalDataType> m_resource;
+            PairingData<PartType, GlobalDataType> m_resource;
             volatile bool m_abort;
             ManualResetEvent m_resetEvent;
             int m_coreID;
@@ -67,7 +67,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
                 }
             }
 
-            public override void CalculateStacks(CalculationPair<PartType, GlobalDataType> calculationPair)
+            public override void CalculateStacks(PairingData<PartType, GlobalDataType> calculationPair)
             {
                 m_resource = calculationPair;
                 m_resetEvent.Reset();

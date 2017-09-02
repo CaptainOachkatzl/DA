@@ -11,10 +11,10 @@ namespace UnorderedPairTestSuit
             OutputValidation validation = new OutputValidation(validationDistribution, 100);
 
 
-            SharedMemoryCores<CalculationDummy, int> cores = new ActorPool<CalculationDummy, int>(4, false);
-            UniquePairDistribution<CalculationDummy, int> distribution = new RoundRobinTournamentDistribution<CalculationDummy, int>(cores);
+            SharedMemoryCores<int, int> cores = new ActorPool<int, int>(4, false);
+            UniquePairDistribution<int, int> distribution = new SingleThreadReference<int, int>(cores);
 
-            PerformanceTest<CalculationDummy, int> performanceTest = new PerformanceTest<CalculationDummy, int>(4, new UniquePairTest_Dummy(distribution, 16));
+            PerformanceTest<int, int> performanceTest = new PerformanceTest<int, int>(4, new FixedDurationTest(distribution, 16));
 
             validation.Run();
             performanceTest.Run();      

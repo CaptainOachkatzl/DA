@@ -83,12 +83,12 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
             m_corePool.Synchronize();
         }
 
-        private CalculationPair<PartType, GlobalDataType> CreateCalculationPair(int threadID, int step)
+        private PairingData<PartType, GlobalDataType> CreateCalculationPair(int threadID, int step)
         {
             //int stackID1 = CircleInt(threadID + step);
             //int stackID2 = GetCalculationPartner(threadID, step, step >= ThreadCount);
 
-            CalculationPair<PartType, GlobalDataType> data = new CalculationPair<PartType, GlobalDataType>(
+            PairingData<PartType, GlobalDataType> data = new PairingData<PartType, GlobalDataType>(
                 Stacks[PairLogic.PairMatrix[step][threadID].ID1],
                 Stacks[PairLogic.PairMatrix[step][threadID].ID2],
                 GlobalData,

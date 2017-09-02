@@ -14,6 +14,9 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
 
         public abstract void Calculate(PartType[] parts, GlobalDataType globalData);
 
-        public abstract void Dispose();
+        public virtual void Dispose()
+        {
+            m_corePool.Dispose();
+        }
     }
 }

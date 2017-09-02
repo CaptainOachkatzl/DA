@@ -22,7 +22,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
             m_pairFunction = calculationFunction;
         }
 
-        public void Calculate(CalculationPair<PartType, GlobalDataType> pair)
+        public void Calculate(PairingData<PartType, GlobalDataType> pair)
         {
             if (m_pairFunction == null)
                 throw new Exception("Calculation function not initialized.");

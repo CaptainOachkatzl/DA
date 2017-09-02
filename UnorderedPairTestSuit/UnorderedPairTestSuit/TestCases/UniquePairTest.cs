@@ -28,6 +28,7 @@ namespace UnorderedPairTestSuit
 
         protected override void TestRoutine(TestResult result)
         {
+            // distribute calculations and execute them with the injected algorithm
             Distribution.Calculate(m_elements, m_globalData);
 
             result.Successful = true;
