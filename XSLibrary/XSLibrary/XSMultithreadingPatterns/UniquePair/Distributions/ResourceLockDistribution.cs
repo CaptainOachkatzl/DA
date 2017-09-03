@@ -45,11 +45,8 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
         {
             DataWrap data = wrappedData as DataWrap;
 
-            for (int i = 0; i < data.parts.Length; i++)
+            for (int i = data.threadID; i < data.parts.Length; i += m_corePool.CoreCount)
             {
-                if (i % m_corePool.CoreCount != data.threadID)
-                    continue;
-
                 data.locks[i].WaitOne();
 
                 for (int j = i + 1; j < data.parts.Length; j++)

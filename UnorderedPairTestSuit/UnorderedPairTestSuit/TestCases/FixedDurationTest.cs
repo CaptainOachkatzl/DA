@@ -18,7 +18,7 @@ namespace UnorderedPairTestSuit
         protected override void CalculationFunction(int part1, int part2, int global)
         {
             // fixed duration of the execution
-            Thread.Sleep(100);
+            Thread.Sleep(10);
         }
     }
 }

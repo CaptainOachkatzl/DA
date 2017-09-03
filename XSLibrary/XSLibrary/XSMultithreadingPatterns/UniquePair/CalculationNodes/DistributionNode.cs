@@ -2,9 +2,9 @@
 {
     public partial class CorePool<PartType, GlobalDataType>
     {
-        public abstract class DistributionNode
+        public abstract class CalculationCore
         {
-            public abstract void CalculateStacks(PairingData<PartType, GlobalDataType> calculationPair);
+            public abstract void CalculatePairedData(PairingData<PartType, GlobalDataType> calculationPair);
         }
     }
 }

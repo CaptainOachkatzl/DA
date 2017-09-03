@@ -6,21 +6,30 @@
         {
         }
 
-        public override void Calculate(PartType[] parts, GlobalDataType globalData)
+        public override void Calculate(PartType[] elements, GlobalDataType globalData)
         {
-            PartType[] part1 = new PartType[1];
-            PartType[] part2 = new PartType[1];
+            // initialize arrays with just one entry
+            PartType[] element1 = new PartType[1];
+            PartType[] elememt2 = new PartType[1];
+
             PairingData<PartType, GlobalDataType> pair;
 
-            for (int i = 0; i < parts.Length; i++)
+            for (int i = 0; i < elements.Length; i++)
             {
-                for (int j = i + 1; j < parts.Length; j++)
+                for (int j = i + 1; j < elements.Length; j++)
                 {
-                    part1[0] = parts[i];
-                    part2[0] = parts[j];
-                    pair = new PairingData<PartType, GlobalDataType>(part1, part2, globalData, false);
+                    // Set values in the arrays
+                    element1[0] = elements[i];
+                    elememt2[0] = elements[j];
+
+                    // Create instruction for the core pool
+                    pair = new PairingData<PartType, GlobalDataType>(element1, elememt2, globalData, false);
+
+                    // Calculate the instruction on Core 0
                     m_corePool.DistributeCalculation(0, pair);
-                    m_corePool.Synchronize();
+
+                    // Wait until Core 0 finished
+                    m_corePool.Synchronize(0);
                 }
             }
         }

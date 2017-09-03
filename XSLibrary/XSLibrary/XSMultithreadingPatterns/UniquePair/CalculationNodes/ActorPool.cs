@@ -18,7 +18,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
 
         public override void DistributeCalculation(int nodeIndex, PairingData<PartType, GlobalDataType> calculationPair)
         {
-            Actors[nodeIndex].CalculateStacks(calculationPair);
+            Actors[nodeIndex].CalculatePairedData(calculationPair);
         }
 
         public override void SetUsableCores(int coreCount)
