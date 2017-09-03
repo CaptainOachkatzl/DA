@@ -7,6 +7,8 @@ namespace UnorderedPairTestSuit
     {
         public OutputValidation(UniquePairDistribution<ValidationDummy, int> distribution, int elementCount) : base(distribution)
         {
+            TestName = "Output Validation";
+
             // initialize the validation objects
             m_elements = new ValidationDummy[elementCount];
             for (int i = 0; i < elementCount; i++)
