@@ -21,11 +21,6 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
             Actors[nodeIndex].CalculatePairedData(calculationPair);
         }
 
-        public override void SetUsableCores(int coreCount)
-        {
-            throw new NotImplementedException();
-        }
-
         public override void Dispose()
         {
             Close(true);

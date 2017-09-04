@@ -1,24 +1,10 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 
 namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
-    static class DDLExports
-    {
-        [DllImport("kernel32.dll")]
-        public static extern int GetCurrentThreadId();
-    }
-
-    struct StackIDs
-    {
-        public int ID1;
-        public int ID2;
-    }
-
     public partial class RoundRobinTournamentDistribution<PartType, GlobalDataType> : UniquePairDistribution<PartType, GlobalDataType>
     {
-        PairingLogic PairLogic { get; set; }
-        public int ThreadCount { get { return PairLogic.ThreadCount; } }
+        RoundRobinTournamentPairing PairLogic { get; set; }
         public int StepCount { get { return PairLogic.StepCount; } }
         int StackCount { get { return PairLogic.StackCount; } }
 
@@ -27,13 +13,13 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
 
         public RoundRobinTournamentDistribution(CorePool<PartType, GlobalDataType> pool) : base(pool)
         {
-            PairLogic = new PairingLogic(pool.CoreCount); // needs to be initialized first so all the variables used are intiialized as well
-
-            Stacks = new PartType[StackCount][];
+            PairLogic = new RoundRobinTournamentPairing(pool.CoreCount); // needs to be initialized first so all the variables used are intiialized as well
         }
 
         public override void Calculate(PartType[] parts, GlobalDataType globalData)
         {
+            PairLogic.SetElementCount(parts.Length);
+
             CreateStacks(parts);
             GlobalData = globalData;
 
@@ -50,6 +36,8 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
 
         private void CreateStacks(PartType[] parts)
         {
+            Stacks = new PartType[StackCount][];
+
             int stackSize = parts.Length / StackCount;
             int leftover = parts.Length % StackCount;
 
@@ -75,7 +63,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
 
         private void CalculateStep(int step)
         {
-            for (int i = 0; i < PairLogic.ThreadCount; i++)
+            for (int i = 0; i < PairLogic.UsableCoreCount; i++)
             {
                 m_corePool.DistributeCalculation(i, CreateCalculationPair(i, step));
             }
@@ -83,21 +71,13 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
             m_corePool.Synchronize();
         }
 
-        private PairingData<PartType, GlobalDataType> CreateCalculationPair(int threadID, int step)
+        private PairingData<PartType, GlobalDataType> CreateCalculationPair(int coreID, int step)
         {
-            //int stackID1 = CircleInt(threadID + step);
-            //int stackID2 = GetCalculationPartner(threadID, step, step >= ThreadCount);
-
-            PairingData<PartType, GlobalDataType> data = new PairingData<PartType, GlobalDataType>(
-                Stacks[PairLogic.PairMatrix[step][threadID].ID1],
-                Stacks[PairLogic.PairMatrix[step][threadID].ID2],
+            PairingData <PartType, GlobalDataType> data = new PairingData<PartType, GlobalDataType>(
+                Stacks[PairLogic.PairMatrix[step][coreID].ID1],
+                Stacks[PairLogic.PairMatrix[step][coreID].ID2],
                 GlobalData,
-                step == 0
-                );
-
-            //data.Step = step;
-            //data.ThreadID = threadID;
-            //data.StackID = PairLogic.PairMatrix[step][threadID];
+                step == 0);
 
             return data;
         }

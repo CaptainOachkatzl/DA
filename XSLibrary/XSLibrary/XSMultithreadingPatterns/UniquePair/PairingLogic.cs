@@ -1,26 +1,48 @@
-﻿namespace XSLibrary.MultithreadingPatterns.UniquePair
+﻿using System;
+
+namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
-    class PairingLogic
+    class RoundRobinTournamentPairing
     {
-        public int ThreadCount { get; private set; }
+        public struct StackIDs
+        {
+            public int ID1;
+            public int ID2;
+        }
+
+        public int CoreCount { get; private set; }
         public int StepCount { get; private set; }
         public int StackCount { get; private set; }
+        private int ElementCount { get; set; }
+
+        public int UsableCoreCount { get { return GetUsableCoreCount(ElementCount); } }
+
         public StackIDs[][] PairMatrix { get; private set; }
 
-        public PairingLogic(int threadCount)
+        public RoundRobinTournamentPairing(int coreCount)
         {
-            InitializeStatics(threadCount);
-            InitializeMatrix();
+            ElementCount = -1;
+            CoreCount = coreCount;
         }
 
-        private void InitializeStatics(int threadCount)
+        public void SetElementCount(int elementCount)
         {
-            ThreadCount = threadCount;
-            StepCount = (2 * ThreadCount) - 1;
-            StackCount = 2 * ThreadCount;
+            if (ElementCount == -1 || GetUsableCoreCount(elementCount) != UsableCoreCount)
+            {
+                ElementCount = elementCount;
+
+                StepCount = (2 * UsableCoreCount) - 1;
+                StackCount = 2 * UsableCoreCount;
+                CreateMatrix();
+            }
         }
 
-        private void InitializeMatrix()
+        private int GetUsableCoreCount(int elementCount)
+        {
+            return Math.Min(elementCount / 2, CoreCount);
+        }
+
+        private void CreateMatrix()
         {
             PairMatrix = new StackIDs[StepCount][];
 
@@ -28,30 +50,18 @@
 
             for (int step = 0; step < StepCount; step++)
             {
-                PairMatrix[step] = new StackIDs[ThreadCount];
-                for (int threadID = 0; threadID < ThreadCount; threadID++)
+                PairMatrix[step] = new StackIDs[UsableCoreCount];
+                for (int coreID = 0; coreID < UsableCoreCount; coreID++)
                 {
                     StackIDs ids;
-                    ids.ID1 = IDs[threadID];
-                    ids.ID2 = IDs[StackCount - 1 - threadID];
-                    PairMatrix[step][threadID] = ids;
+                    ids.ID1 = IDs[coreID];
+                    ids.ID2 = IDs[StackCount - 1 - coreID];
+                    PairMatrix[step][coreID] = ids;
                 }
 
                 if(step + 1 < StepCount)
                     ShiftArray(IDs);
             }
-        }
-
-        private int[] CreateShiftedArray(int step)
-        {
-            int[] IDs = CreateBaseArray();
-
-            for (int i = 0; i < step; i++)
-            {
-                ShiftArray(IDs);
-            }
-
-            return IDs;
         }
 
         private int[] CreateBaseArray()
@@ -85,7 +95,7 @@
 
         private int CircleInt(int value)
         {
-            int cap = ThreadCount * 2;
+            int cap = UsableCoreCount * 2;
 
             if (value < 0)
                 return CircleInt(value + cap);

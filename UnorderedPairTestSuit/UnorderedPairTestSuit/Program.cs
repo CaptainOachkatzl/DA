@@ -9,8 +9,8 @@ namespace UnorderedPairTestSuit
             // validation
 
             SharedMemoryCores<ValidationDummy, int> validationPool = new SystemHandledThreadPool<ValidationDummy, int>(4);
-            UniquePairDistribution<ValidationDummy, int> validationDistribution = new ResourceLockDistribution<ValidationDummy, int>(validationPool);
-            OutputValidation validation = new OutputValidation(validationDistribution, 16);
+            UniquePairDistribution<ValidationDummy, int> validationDistribution = new RoundRobinTournamentDistribution<ValidationDummy, int>(validationPool);
+            OutputValidation validation = new OutputValidation(validationDistribution, 4);
 
             SharedMemoryCores<int, int> cores = new ActorPool<int, int>(4, false);
             UniquePairDistribution<int, int> singleThreadDistribution = new SingleThreadReference<int, int>(cores);
@@ -20,7 +20,7 @@ namespace UnorderedPairTestSuit
 
             // performance
 
-            const int loopCount = 10;
+            const int loopCount = 100;
             const int elementCount = 16;
 
             PerformanceTest<int, int> performanceTestSingleThread = new PerformanceTest<int, int>(
@@ -36,9 +36,9 @@ namespace UnorderedPairTestSuit
             performanceTestRoundRobin.TestName = "Round Robin";
 
             validation.Run();
-            performanceTestSingleThread.Run();
+            //performanceTestSingleThread.Run();
             performanceTestResourceLock.Run();
-            performanceTestRoundRobin.Run();
+            //performanceTestRoundRobin.Run();
 
             cores.Dispose();
 

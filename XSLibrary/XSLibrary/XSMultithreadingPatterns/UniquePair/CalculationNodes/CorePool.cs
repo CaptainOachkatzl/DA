@@ -11,8 +11,6 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
 
         public abstract void DistributeCalculation(int coreIndex, PairingData<PartType, GlobalDataType> calculationPair);
 
-        public abstract void SetUsableCores(int coreCount);
-
         public abstract void Synchronize();
         public abstract void Synchronize(int coreIndex);
 

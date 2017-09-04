@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace PlanetSimulation.EngineComponents
 {
-    class GraphicCardDistributionPool : DistributionPool<Planet, GameTime>
+    class GraphicCardDistributionPool : CorePool<Planet, GameTime>
     {
         const string FUNCTION_NAME = "CalculateGravity";
 
@@ -24,7 +24,7 @@ namespace PlanetSimulation.EngineComponents
         ComputeBuffer<float> m_inputBuffer;
         ComputeBuffer<float> m_outputBuffer;
 
-        public override int NodeCount
+        public override int CoreCount
         {
             get
             {
@@ -60,7 +60,7 @@ namespace PlanetSimulation.EngineComponents
             return clSource;
         }
 
-        public override void DistributeCalculation(int nodeIndex, CalculationPair<Planet, GameTime> calculationPair)
+        public override void DistributeCalculation(int coreIndex, PairingData<Planet, GameTime> calculationPair)
         {
             m_resetEvent.Reset();
 
@@ -96,7 +96,7 @@ namespace PlanetSimulation.EngineComponents
             //}).Start();
         }
 
-        private void InitializeData(CalculationPair<Planet, GameTime> calculationPair)
+        private void InitializeData(PairingData<Planet, GameTime> calculationPair)
         {
             int size = calculationPair.Stack1.Length + calculationPair.Stack2.Length;
             InputTransformationArray input = new InputTransformationArray(size, 3);
@@ -131,7 +131,7 @@ namespace PlanetSimulation.EngineComponents
             m_queue.ExecuteTask(m_kernelProgram, null);
         }
 
-        private void ApplyResult(CalculationPair<Planet, GameTime> calculationPair)
+        private void ApplyResult(PairingData<Planet, GameTime> calculationPair)
         {
             int size = calculationPair.Stack1.Length + calculationPair.Stack2.Length;
 

@@ -1,10 +1,17 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
+    static class DDLExports
+    {
+        [DllImport("kernel32.dll")] 
+        public static extern int GetCurrentThreadId();
+    }
+
     public partial class ActorPool<PartType, GlobalDataType> : SharedMemoryCores<PartType, GlobalDataType>
     {
         public class ActorNode : CalculationCore

@@ -37,11 +37,6 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
             data.m_resetEvent.Set();
         }
 
-        public override void SetUsableCores(int coreCount)
-        {
-            throw new NotImplementedException();
-        }
-
         public override void Dispose()
         {
         }

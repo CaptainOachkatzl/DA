@@ -13,7 +13,7 @@ namespace PlanetSimulation.EngineComponents
         private CollisionHandling CollisionHandler { get; set; }
 
         private UniquePairDistribution<Planet, GameTime> m_pairDistribution;
-        private SharedMemoryPool<Planet, GameTime> m_distributionPool;
+        private SharedMemoryCores<Planet, GameTime> m_distributionPool;
         private GraphicCardDistributionPool m_graphicCardPool;
 
         public int CoreCount { get; private set; }
@@ -39,8 +39,8 @@ namespace PlanetSimulation.EngineComponents
 
             CoreCount = GetCoreCount();
             m_graphicCardPool = new GraphicCardDistributionPool();
-            m_distributionPool = new ActorPool<Planet, GameTime>(2, false);
-            m_pairDistribution = new ResourceLockDistribution<Planet, GameTime>(m_distributionPool);
+            m_distributionPool = new ActorPool<Planet, GameTime>(4, false);
+            m_pairDistribution = new RoundRobinTournamentDistribution<Planet, GameTime>(m_distributionPool);
         }
         public void Close()
         {
