@@ -1,24 +1,16 @@
 ﻿using XSLibrary.MultithreadingPatterns.UniquePair;
-using System.Threading;
 
 namespace UnorderedPairTestSuit
 {
-    class FixedDurationTest : UniquePairTest<int, int>
+    class FixedDurationTest : DurationTest
     {
-        public FixedDurationTest(UniquePairDistribution<int, int> distribution, int dummyCount) : base(distribution)
-        {
-            // initialize elements
-            m_elements = new int[dummyCount];
-            for (int i = 0; i < dummyCount; i++)
-            {
-                m_elements[i] = i;
-            }
-        }
+        int m_duration;
 
-        protected override void CalculationFunction(int part1, int part2, int global)
+        protected override int Duration { get { return m_duration; } }
+
+        public FixedDurationTest(UniquePairDistribution<int, int> distribution, int dummyCount, int durationMilliSeconds) : base(distribution, dummyCount)
         {
-            // fixed duration of the execution
-            Thread.Sleep(10);
+            m_duration = durationMilliSeconds;
         }
     }
 }

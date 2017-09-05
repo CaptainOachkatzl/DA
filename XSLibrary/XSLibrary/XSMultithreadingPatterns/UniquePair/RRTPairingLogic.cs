@@ -19,7 +19,7 @@
             ElementCount = -1;
         }
 
-        public void Update(int elementCount)
+        public void GenerateMatrix(int elementCount)
         {
             ElementCount = elementCount;
             PairCount = ElementCount / 2; 

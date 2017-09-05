@@ -49,8 +49,9 @@
     <Compile Include="UniquePair\CalculationNodes\CorePool.cs" />
     <Compile Include="UniquePair\CalculationNodes\SharedMemoryCores.cs" />
     <Compile Include="UniquePair\CalculationNodes\SystemHandledThreadPool.cs" />
+    <Compile Include="UniquePair\Distributions\EvenlyLockedDistribution.cs" />
     <Compile Include="UniquePair\Distributions\LockedRoundRobinTournamentDistribution.cs" />
-    <Compile Include="UniquePair\Distributions\ResourceLockDistribution.cs" />
+    <Compile Include="UniquePair\Distributions\LockedResourceDistribution.cs" />
     <Compile Include="UniquePair\Distributions\SingleThreadReference.cs" />
     <Compile Include="UniquePair\RRTPairingLogic.cs" />
     <Compile Include="UniquePair\StackCalculationAlgorithms\SharedMemoryStackCalculation.cs" />

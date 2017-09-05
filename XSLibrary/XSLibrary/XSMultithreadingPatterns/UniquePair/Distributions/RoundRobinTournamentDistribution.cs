@@ -29,7 +29,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
             CreateStacks(parts);
 
             if(previouslyUsableCores != UsableCoreCount)
-                PairLogic.Update(UsableCoreCount * 2);
+                PairLogic.GenerateMatrix(UsableCoreCount * 2);
 
             GlobalData = globalData;
 

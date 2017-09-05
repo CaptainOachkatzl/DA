@@ -44,6 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PerformanceTest.cs" />
+    <Compile Include="TestCases\BusyDurationTest.cs" />
+    <Compile Include="TestCases\DurationTest.cs" />
+    <Compile Include="TestCases\RandomDurationTest.cs" />
     <Compile Include="TestDummies\CalculationDummy.cs" />
     <Compile Include="TestDummies\ValidationDummy.cs" />
     <Compile Include="TestCases\OutputValidation.cs" />
