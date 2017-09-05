@@ -2,25 +2,35 @@
 
 namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
-    public partial class RoundRobinTournamentDistribution<PartType, GlobalDataType> : UniquePairDistribution<PartType, GlobalDataType>
+    public partial class RRTDistribution<PartType, GlobalDataType> : UniquePairDistribution<PartType, GlobalDataType>
     {
-        RoundRobinTournamentPairing PairLogic { get; set; }
+        RRTPairing PairLogic { get; set; }
+        public int CoreCount { get { return m_corePool.CoreCount; } }
         public int StepCount { get { return PairLogic.StepCount; } }
-        int StackCount { get { return PairLogic.StackCount; } }
+
+        int ElementCount { get; set; }
+        int UsableCoreCount { get; set; }
 
         PartType[][] Stacks { get; set; }
         GlobalDataType GlobalData { get; set; }
 
-        public RoundRobinTournamentDistribution(CorePool<PartType, GlobalDataType> pool) : base(pool)
+        public RRTDistribution(CorePool<PartType, GlobalDataType> pool) : base(pool)
         {
-            PairLogic = new RoundRobinTournamentPairing(pool.CoreCount); // needs to be initialized first so all the variables used are intiialized as well
+            PairLogic = new RRTPairing();
         }
 
         public override void Calculate(PartType[] parts, GlobalDataType globalData)
         {
-            PairLogic.SetElementCount(parts.Length);
+            ElementCount = parts.Length;
+
+            int previouslyUsableCores = UsableCoreCount;
+            UsableCoreCount = CalculateUsableCoreCount(ElementCount);
 
             CreateStacks(parts);
+
+            if(previouslyUsableCores != UsableCoreCount)
+                PairLogic.Update(UsableCoreCount * 2);
+
             GlobalData = globalData;
 
             for (int i = 0; i < StepCount; i++)
@@ -29,19 +39,21 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
             }
         }
 
-        public override void Dispose()
+        private int CalculateUsableCoreCount(int elementCount)
         {
-            m_corePool.Dispose();
+            return Math.Min(CoreCount, elementCount / 2);
         }
 
         private void CreateStacks(PartType[] parts)
         {
-            Stacks = new PartType[StackCount][];
+            int stackCount = UsableCoreCount * 2;
 
-            int stackSize = parts.Length / StackCount;
-            int leftover = parts.Length % StackCount;
+            Stacks = new PartType[stackCount][];
 
-            for (int i = 0; i < StackCount; i++)
+            int stackSize = ElementCount / stackCount;
+            int leftover = ElementCount % stackCount;
+
+            for (int i = 0; i < stackCount; i++)
             {
                 // as there might be numbers of parts which are not divideable cleanly
                 // the leftovers get added one by one to the first few stacks
@@ -63,7 +75,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
 
         private void CalculateStep(int step)
         {
-            for (int i = 0; i < PairLogic.UsableCoreCount; i++)
+            for (int i = 0; i < UsableCoreCount; i++)
             {
                 m_corePool.DistributeCalculation(i, CreateCalculationPair(i, step));
             }
@@ -80,6 +92,11 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
                 step == 0);
 
             return data;
+        }
+
+        public override void Dispose()
+        {
+            m_corePool.Dispose();
         }
     }
 }

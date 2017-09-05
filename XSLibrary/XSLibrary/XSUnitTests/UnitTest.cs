@@ -6,7 +6,7 @@ namespace XSLibrary.UnitTests
 {
     public abstract class UnitTest : IDisposable
     {
-        public string TestName { get; protected set; } = "Default";
+        public string TestName { get; set; } = "Default";
 
         protected Stopwatch m_stopWatch;
         public Logger m_log;

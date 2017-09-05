@@ -4,7 +4,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
     public class ResourceLockDistribution<PartType, GlobalDataType> : UniquePairDistribution<PartType, GlobalDataType>
     {
-        class DataWrap
+        protected class DataWrap
         {
             public int threadID;
             public PartType[] parts;
@@ -41,30 +41,37 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
             WaitHandle.WaitAll(waitHandles);
         }
 
-        private void ThreadExecution(object wrappedData)
+        protected virtual void ThreadExecution(object wrappedData)
         {
             DataWrap data = wrappedData as DataWrap;
 
-            for (int i = data.threadID; i < data.parts.Length; i += m_corePool.CoreCount)
+            for (int i = data.threadID; i < data.parts.Length - 1; i += m_corePool.CoreCount)
             {
-                data.locks[i].WaitOne();
-
                 for (int j = i + 1; j < data.parts.Length; j++)
                 {
-                    data.locks[j].WaitOne();
-
-                    m_corePool.DistributeCalculation(
-                        data.threadID, 
-                        new PairingData<PartType, GlobalDataType>(new PartType[1] { data.parts[i] } , new PartType[1] { data.parts[j] }, data.global, false));
-
-                    m_corePool.Synchronize(data.threadID);
-                    data.locks[j].Release();
+                    CalculatePair(data, i, j);
                 }
-               
-                data.locks[i].Release();
             }
 
             data.waitHandles[data.threadID].Set();
+        }
+
+        protected void CalculatePair(DataWrap data, int id1, int id2)
+        {
+            data.locks[id1].WaitOne();
+            data.locks[id2].WaitOne();
+
+            m_corePool.DistributeCalculation(
+                        data.threadID,
+                        new PairingData<PartType, GlobalDataType>(
+                            new PartType[1] { data.parts[id1] }, 
+                            new PartType[1] { data.parts[id2] }, 
+                            data.global, false));
+
+            m_corePool.Synchronize(data.threadID);
+
+            data.locks[id2].Release();
+            data.locks[id1].Release();
         }
 
         public override void Dispose()

@@ -40,7 +40,7 @@ namespace PlanetSimulation.EngineComponents
             CoreCount = GetCoreCount();
             m_graphicCardPool = new GraphicCardDistributionPool();
             m_distributionPool = new ActorPool<Planet, GameTime>(4, false);
-            m_pairDistribution = new RoundRobinTournamentDistribution<Planet, GameTime>(m_distributionPool);
+            m_pairDistribution = new RRTDistribution<Planet, GameTime>(m_distributionPool);
         }
         public void Close()
         {
