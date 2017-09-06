@@ -15,23 +15,26 @@ namespace UnorderedPairTestSuit
 
 
 
-            const int loopCount = 100;
-            const int elementCount = 16;
+            const int loopCount = 1;
+            const int elementCount = 100;
 
             SharedMemoryCores<int, int> performancePool = new ActorPool<int, int>(4, false);
             PerformanceTest<int, int> performanceTest = new PerformanceTest<int, int>(loopCount, performancePool);
 
+            // overhead
+            performanceTest.Run(new OverheadTest(elementCount));
+
             // fixed duration
-            const int duration = 10;
+            const int duration = 3;
             performanceTest.Run(new FixedDurationTest(elementCount, duration));
 
             // random duration
-            const int rndAverage = 10;
-            const int rndVarianz = 10;
+            const int rndAverage = 3;
+            const int rndVarianz = 2;
             performanceTest.Run(new RandomDurationTest(elementCount, rndAverage, rndVarianz));
 
             // busy duration
-            const int difficulty = 0;
+            const int difficulty = 1000;
             performanceTest.Run(new BusyDuration(elementCount, difficulty));
 
             performanceTest.Dispose();

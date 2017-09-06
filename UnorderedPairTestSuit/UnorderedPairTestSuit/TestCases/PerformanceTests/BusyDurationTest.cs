@@ -2,7 +2,7 @@
 
 namespace UnorderedPairTestSuit
 {
-    class BusyDuration : SinglePerformanceTest
+    class BusyDuration : TimeMeasurementTest
     {
         int Difficulty { get; set; }
         int LastSum { get; set; }
@@ -13,12 +13,12 @@ namespace UnorderedPairTestSuit
             Difficulty = difficulty;
         }
 
-        protected override void CalculationFunction(int part1, int part2, int global)
+        protected override void CalculationFunction(int element1, int element2, int global)
         {
             int sum = 0;
             for (int i = 0; i < Difficulty; i++)
             {
-                sum += part1 * part2;
+                sum += element1 * element2;
             }
 
             LastSum = sum;

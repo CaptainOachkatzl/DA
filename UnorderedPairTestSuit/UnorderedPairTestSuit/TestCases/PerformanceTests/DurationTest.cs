@@ -2,7 +2,7 @@
 
 namespace UnorderedPairTestSuit
 {
-    abstract class DurationTest : SinglePerformanceTest
+    abstract class DurationTest : TimeMeasurementTest
     {
         protected abstract int Duration { get; }
 
@@ -10,7 +10,7 @@ namespace UnorderedPairTestSuit
         {
         }
 
-        protected override void CalculationFunction(int part1, int part2, int global)
+        protected override void CalculationFunction(int element1, int element2, int global)
         {
             // fixed duration of the execution
             Thread.Sleep(Duration);

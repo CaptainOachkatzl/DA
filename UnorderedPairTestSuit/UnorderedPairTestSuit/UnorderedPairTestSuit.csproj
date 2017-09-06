@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="TestCases\MultiAlgorithmTest.cs" />
+    <Compile Include="TestCases\PerformanceTests\OverheadTest.cs" />
     <Compile Include="TestCases\PerformanceTests\PerformanceTest.cs" />
     <Compile Include="TestCases\PerformanceTests\BusyDurationTest.cs" />
     <Compile Include="TestCases\PerformanceTests\DurationTest.cs" />

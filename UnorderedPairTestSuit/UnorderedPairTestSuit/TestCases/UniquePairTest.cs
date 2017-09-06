@@ -25,7 +25,7 @@ namespace UnorderedPairTestSuit
             Distribution = distribution;
         }
 
-        protected abstract void CalculationFunction(PartType part1, PartType part2, GlobalType global);
+        protected abstract void CalculationFunction(PartType element1, PartType element2, GlobalType global);
 
         protected override void Initializing()
         {

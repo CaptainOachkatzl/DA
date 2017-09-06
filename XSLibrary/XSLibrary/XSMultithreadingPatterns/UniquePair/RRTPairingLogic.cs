@@ -27,7 +27,7 @@
 
             PairMatrix = new PairIDs[StepCount][];
 
-            int[] IDs = CreateBaseArray();
+            int[] RRTStep = CreateBaseArray();
 
             for (int step = 0; step < StepCount; step++)
             {
@@ -35,13 +35,13 @@
                 for (int pairID = 0; pairID < PairCount; pairID++)
                 {
                     PairIDs ids;
-                    ids.ID1 = IDs[pairID];
-                    ids.ID2 = IDs[ElementCount - 1 - pairID];
+                    ids.ID1 = RRTStep[pairID];
+                    ids.ID2 = RRTStep[ElementCount - 1 - pairID];
                     PairMatrix[step][pairID] = ids;
                 }
 
                 if(step + 1 < StepCount)
-                    ShiftArray(IDs);
+                    ShiftArray(RRTStep);
             }
         }
 
