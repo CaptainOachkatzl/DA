@@ -1,27 +1,37 @@
 ﻿using System;
+using XSLibrary.MultithreadingPatterns.UniquePair;
 using XSLibrary.UnitTests;
 using XSLibrary.Utility;
 
 namespace UnorderedPairTestSuit
 {
-    class PerformanceTest<PartType, GlobalType> : IDisposable
+    class PerformanceTest<PartType, GlobalType> : MultiAlgorithmTest<int, int>, IDisposable
     {
-        UniquePairTest<PartType, GlobalType> m_test;
         int m_loopCount;
-        Logger Log = new LoggerConsole();
 
-        public string TestName { get; set; } = "Default";
+        //public string TestName { get; set; } = "Default";
 
-        public PerformanceTest(int loopCount, UniquePairTest<PartType, GlobalType> test)
+        public PerformanceTest(int loopCount, CorePool<int, int> corePool) : base(corePool)
         {
             m_loopCount = loopCount;
-            m_test = test;
-            m_test.m_log = new NoLog();
         }
 
-        public void Run()
+        public virtual void Run(UniquePairTest<int, int> test)
         {
-            Log.Log("Starting performance test \""+ TestName + "\"");
+            Log.Log("Initializing test run with {0} elements.", test.m_elements.Length);
+            Log.Log("Tests are repeated {0} times.\n", m_loopCount);
+
+            foreach (var distribution in m_distributions)
+            {
+                Log.Log("Starting \"" + test.TestName + "\" test with \"" + distribution.Key + "\" distribution.");
+                test.SetDistribution(distribution.Value);
+                RunSingleTest(test);
+            }
+        }
+
+        protected override void RunSingleTest(UniquePairTest<int, int> test)
+        {
+            test.m_log = new NoLog();
 
             TimeSpan duration = new TimeSpan(0);
             TimeSpan minimum = new TimeSpan(long.MaxValue);
@@ -29,7 +39,7 @@ namespace UnorderedPairTestSuit
 
             for (int i = 0; i < m_loopCount; i++)
             {
-                TestResult result = m_test.Run();
+                TestResult result = test.Run();
                 duration += result.Duration;
 
                 if (result.Duration > maximum)
@@ -49,7 +59,7 @@ namespace UnorderedPairTestSuit
 
         public void Dispose()
         {
-            m_test.Dispose();
+            m_corePool.Dispose();
         }
     }
 }

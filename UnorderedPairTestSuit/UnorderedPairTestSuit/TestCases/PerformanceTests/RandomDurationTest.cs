@@ -1,5 +1,4 @@
 ﻿using System;
-using XSLibrary.MultithreadingPatterns.UniquePair;
 
 namespace UnorderedPairTestSuit
 {
@@ -12,8 +11,10 @@ namespace UnorderedPairTestSuit
 
         protected override int Duration { get { return rnd.Next(m_average - m_varianz / 2, m_average + m_varianz / 2); } }
 
-        public RandomDurationTest(UniquePairDistribution<int, int> distribution, int dummyCount, int average, int varianz) : base(distribution, dummyCount)
+        public RandomDurationTest(int dummyCount, int average, int varianz) : base(dummyCount)
         {
+            TestName = "Random Duration";
+
             m_average = average;
             m_varianz = varianz;
         }

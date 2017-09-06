@@ -1,24 +1,26 @@
-﻿using XSLibrary.MultithreadingPatterns.UniquePair;
-using XSLibrary.UnitTests;
+﻿using XSLibrary.UnitTests;
 
 namespace UnorderedPairTestSuit
 {
     class OutputValidation : UniquePairTest<ValidationDummy, int>
     {
-        public OutputValidation(UniquePairDistribution<ValidationDummy, int> distribution, int elementCount) : base(distribution)
+        public OutputValidation() : base()
         {
             TestName = "Output Validation";
+        }
 
+        public void SetElementCount(int elementCount)
+        {
             // initialize the validation objects
             m_elements = new ValidationDummy[elementCount];
             for (int i = 0; i < elementCount; i++)
                 m_elements[i] = new ValidationDummy(elementCount, i);
         }
 
-        protected override void CalculationFunction(ValidationDummy part1, ValidationDummy part2, int global)
+        protected override void CalculationFunction(ValidationDummy element1, ValidationDummy element2, int global)
         {
-            part1.SetCalculatedWithElement(part2.ElementIndex);
-            part2.SetCalculatedWithElement(part1.ElementIndex);
+            element1.SetCalculatedWithElement(element2.ElementIndex);
+            element2.SetCalculatedWithElement(element1.ElementIndex);
         }
 
         protected override void TestRoutine(TestResult result)

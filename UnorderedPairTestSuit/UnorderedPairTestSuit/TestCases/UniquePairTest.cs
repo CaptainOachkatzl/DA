@@ -6,16 +6,22 @@ namespace UnorderedPairTestSuit
 {
     abstract class UniquePairTest<PartType, GlobalType> : UnitTest
     {
-        UniquePairDistribution<PartType, GlobalType> Distribution { get; set; }
+        protected UniquePairDistribution<PartType, GlobalType> Distribution { get; set; }
         SharedMemoryCores<PartType, GlobalType> Pool { get { return Distribution.CorePool as SharedMemoryCores<PartType, GlobalType>; } }
 
-        protected PartType[] m_elements { get; set; }
-        protected GlobalType m_globalData { get; set; }
+        public PartType[] m_elements { get; protected set; }
+        public GlobalType m_globalData { get; protected set; }
 
+        public UniquePairTest() : this(null) { }
         public UniquePairTest(UniquePairDistribution<PartType, GlobalType> distribution)
         {
             m_log = new LoggerConsole();
 
+            Distribution = distribution;
+        }
+
+        public void SetDistribution(UniquePairDistribution<PartType, GlobalType> distribution)
+        {
             Distribution = distribution;
         }
 
@@ -28,6 +34,9 @@ namespace UnorderedPairTestSuit
 
         protected override void TestRoutine(TestResult result)
         {
+            if (Distribution == null)
+                throw new System.Exception("Distribution is null.");
+
             // distribute calculations and execute them with the injected algorithm
             Distribution.Calculate(m_elements, m_globalData);
 

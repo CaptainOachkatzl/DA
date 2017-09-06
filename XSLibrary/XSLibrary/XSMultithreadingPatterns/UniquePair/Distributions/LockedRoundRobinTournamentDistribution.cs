@@ -5,6 +5,7 @@
         RRTPairing m_pairingLogic = new RRTPairing();
 
         int CurrentElementCount { get; set; }
+        bool m_even;
 
         public LockedRRTDistribution(CorePool<PartType, GlobalDataType> pool) : base(pool)
         {
@@ -15,9 +16,9 @@
         {
             if (CurrentElementCount != elements.Length)
             {
-                bool even = elements.Length % 2 == 0;
+                m_even = elements.Length % 2 == 0;
 
-                if (even)
+                if (m_even)
                     m_pairingLogic.GenerateMatrix(elements.Length);
                 else
                     m_pairingLogic.GenerateMatrix(elements.Length + 1);
@@ -34,10 +35,13 @@
             {
                 for (int pair = threadID; pair < m_pairingLogic.PairCount; pair += CorePool.CoreCount)
                 {
-                    CalculatePair(
-                        threadID,
-                        m_pairingLogic.PairMatrix[step][pair].ID1,
-                        m_pairingLogic.PairMatrix[step][pair].ID2);
+                    int id1 = m_pairingLogic.PairMatrix[step][pair].ID1;
+                    int id2 = m_pairingLogic.PairMatrix[step][pair].ID2;
+
+                    if (!m_even && (id1 == CurrentElementCount || id2 == CurrentElementCount))
+                        continue;
+
+                    CalculatePair(threadID, id1, id2);
                 }
             }
         }
