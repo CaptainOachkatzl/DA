@@ -48,7 +48,7 @@
     <Compile Include="TestCases\PerformanceTests\PerformanceTest.cs" />
     <Compile Include="TestCases\PerformanceTests\BusyDurationTest.cs" />
     <Compile Include="TestCases\PerformanceTests\DurationTest.cs" />
-    <Compile Include="TestCases\PerformanceTests\SinglePerformanceTest.cs" />
+    <Compile Include="TestCases\PerformanceTests\TimeMeasurement.cs" />
     <Compile Include="TestCases\PerformanceTests\RandomDurationTest.cs" />
     <Compile Include="TestCases\ValidationTests\ValidationTest.cs" />
     <Compile Include="TestDummies\CalculationDummy.cs" />

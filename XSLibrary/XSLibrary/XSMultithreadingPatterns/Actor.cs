@@ -59,7 +59,7 @@ namespace XSLibrary.MultithreadingPatterns.Actor
 
         public void SendMessage(MessageType mes)
         {
-            m_queue.Add(mes);
+            m_queue.Push(mes);
             m_limit.Release();
         }
 
