@@ -18,7 +18,8 @@ namespace UnorderedPairTestSuit
 
         public virtual void Run(UniquePairTest<int, int> test)
         {
-            Log.Log("\nInitializing test run with {0} elements.", test.m_elements.Length);
+            Log.Log("\n---------------------------------------------------------------------------------");
+            Log.Log("Initializing test run with {0} elements.", test.m_elements.Length);
             Log.Log("Tests are repeated {0} times.\n", m_loopCount);
 
             foreach (var distribution in m_distributions)
