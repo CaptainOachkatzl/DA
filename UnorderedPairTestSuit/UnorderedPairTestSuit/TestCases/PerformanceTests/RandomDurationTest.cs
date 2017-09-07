@@ -9,7 +9,7 @@ namespace UnorderedPairTestSuit
         int m_average;
         int m_varianz;
 
-        protected override int Duration { get { return rnd.Next(m_average - m_varianz / 2, m_average + m_varianz / 2); } }
+        protected override int Duration { get { return rnd.Next(m_average - m_varianz / 2, m_average + m_varianz / 2 + 1); } }
 
         public RandomDurationTest(int dummyCount, int average, int varianz) : base(dummyCount)
         {

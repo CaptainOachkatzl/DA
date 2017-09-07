@@ -39,8 +39,8 @@ namespace PlanetSimulation.EngineComponents
 
             CoreCount = GetCoreCount();
             m_graphicCardPool = new GraphicCardDistributionPool();
-            m_distributionPool = new ActorPool<Planet, GameTime>(4, false);
-            m_pairDistribution = new LockedRRTDistribution<Planet, GameTime>(m_distributionPool);
+            m_distributionPool = new ActorPool<Planet, GameTime>(CoreCount, false);
+            m_pairDistribution = new SynchronizedRRTDistribution<Planet, GameTime>(m_distributionPool);
         }
         public void Close()
         {

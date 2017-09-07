@@ -2,7 +2,7 @@
 
 namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
-    public partial class RRTDistribution<PartType, GlobalDataType> : UniquePairDistribution<PartType, GlobalDataType>
+    public partial class SynchronizedRRTDistribution<PartType, GlobalDataType> : UniquePairDistribution<PartType, GlobalDataType>
     {
         RRTPairing PairLogic { get; set; }
         public int CoreCount { get { return m_corePool.CoreCount; } }
@@ -14,7 +14,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
         PartType[][] Stacks { get; set; }
         GlobalDataType GlobalData { get; set; }
 
-        public RRTDistribution(CorePool<PartType, GlobalDataType> pool) : base(pool)
+        public SynchronizedRRTDistribution(CorePool<PartType, GlobalDataType> pool) : base(pool)
         {
             PairLogic = new RRTPairing();
         }

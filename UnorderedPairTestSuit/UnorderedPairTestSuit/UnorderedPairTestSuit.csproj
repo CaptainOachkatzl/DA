@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MatrixPrinter.cs" />
     <Compile Include="TestCases\MultiAlgorithmTest.cs" />
     <Compile Include="TestCases\PerformanceTests\OverheadTest.cs" />
     <Compile Include="TestCases\PerformanceTests\PerformanceTest.cs" />

@@ -28,7 +28,7 @@ namespace UnorderedPairTestSuit
             m_distributions.Add("Locked Resource", new LockedResourceDistribution<PartType, GlobalDataType>(m_corePool));
             m_distributions.Add("Evenly Locked", new EvenlyLockedDistribution<PartType, GlobalDataType>(m_corePool));
             m_distributions.Add("Locked Round Robin Tournament", new LockedRRTDistribution<PartType, GlobalDataType>(m_corePool));
-            m_distributions.Add("Round Robin Tournament", new RRTDistribution<PartType, GlobalDataType>(m_corePool));
+            m_distributions.Add("Synchronized Round Robin Tournament", new SynchronizedRRTDistribution<PartType, GlobalDataType>(m_corePool));
         }
     }
 }

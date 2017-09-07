@@ -2,13 +2,15 @@
 {
     public class LockedRRTDistribution<PartType, GlobalDataType> : LockedResourceDistribution<PartType, GlobalDataType>
     {
-        RRTPairing m_pairingLogic = new RRTPairing();
+        RRTPairing PairLogic { get; set; }
 
         int CurrentElementCount { get; set; }
         bool m_even;
 
         public LockedRRTDistribution(CorePool<PartType, GlobalDataType> pool) : base(pool)
         {
+            PairLogic = new RRTPairing();
+
             CurrentElementCount = -1;
         }
 
@@ -19,9 +21,9 @@
                 m_even = elements.Length % 2 == 0;
 
                 if (m_even)
-                    m_pairingLogic.GenerateMatrix(elements.Length);
+                    PairLogic.GenerateMatrix(elements.Length);
                 else
-                    m_pairingLogic.GenerateMatrix(elements.Length + 1);
+                    PairLogic.GenerateMatrix(elements.Length + 1);
             }
 
             CurrentElementCount = elements.Length;
@@ -31,12 +33,12 @@
 
         protected override void Distribution(int threadID)
         {
-            for (int step = 0; step < m_pairingLogic.StepCount; step++)
+            for (int step = 0; step < PairLogic.StepCount; step++)
             {
-                for (int pair = threadID; pair < m_pairingLogic.PairCount; pair += CorePool.CoreCount)
+                for (int pair = threadID; pair < PairLogic.PairCount; pair += CorePool.CoreCount)
                 {
-                    int id1 = m_pairingLogic.PairMatrix[step][pair].ID1;
-                    int id2 = m_pairingLogic.PairMatrix[step][pair].ID2;
+                    int id1 = PairLogic.PairMatrix[step][pair].ID1;
+                    int id2 = PairLogic.PairMatrix[step][pair].ID2;
 
                     if (!m_even && (id1 == CurrentElementCount || id2 == CurrentElementCount))
                         continue;

@@ -1,6 +1,6 @@
 ﻿namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
-    class RRTPairing
+    public class RRTPairing
     {
         public struct PairIDs
         {
