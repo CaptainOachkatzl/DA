@@ -19,27 +19,35 @@ namespace UnorderedPairTestSuit
 
 
 
-            const int loopCount = 10;
-            const int elementCount = 100;
+            const int loopCount = 100;
+            const int countRun1 = 16;
+            const int countRun2 = 128;
+            const int countRun3 = 1024;
 
             SharedMemoryCores<int, int> performancePool = new ActorPool<int, int>(4, false);
             PerformanceTest<int, int> performanceTest = new PerformanceTest<int, int>(loopCount, performancePool);
 
             // overhead
-            performanceTest.Run(new OverheadTest(1000));
+            performanceTest.Run(new OverheadTest(countRun1));
+            performanceTest.Run(new OverheadTest(countRun2));
+            performanceTest.Run(new OverheadTest(countRun3));
 
             // fixed duration
-            const int duration = 10;
-            performanceTest.Run(new FixedDurationTest(16, duration));
+            const int duration = 2;
+            performanceTest.Run(new FixedDurationTest(countRun1, duration));
+            performanceTest.Run(new FixedDurationTest(countRun2, duration));
 
             // random duration
-            const int rndAverage = 10;
-            const int rndVarianz = 10;
-            performanceTest.Run(new RandomDurationTest(16, rndAverage, rndVarianz));
+            const int rndAverage = 2;
+            const int rndVarianz = 2;
+            performanceTest.Run(new RandomDurationTest(countRun1, rndAverage, rndVarianz));
+            performanceTest.Run(new RandomDurationTest(countRun2, rndAverage, rndVarianz));
 
             // busy duration
-            const int difficulty = 1000;
-            performanceTest.Run(new BusyDuration(1000, difficulty));
+            const int difficulty = 1024;
+            performanceTest.Run(new BusyDuration(countRun1, difficulty));
+            performanceTest.Run(new BusyDuration(countRun2, difficulty));
+            performanceTest.Run(new BusyDuration(countRun3, difficulty));
 
             performanceTest.Dispose();
 

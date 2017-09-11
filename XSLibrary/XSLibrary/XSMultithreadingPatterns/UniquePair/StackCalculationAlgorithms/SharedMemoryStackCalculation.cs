@@ -4,20 +4,18 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
     public class SharedMemoryStackCalculation<PartType, GlobalDataType>
     {
-        public delegate void PairCalculationFunction(PartType part1, PartType part2, GlobalDataType globalData);
-
-        PairCalculationFunction m_pairFunction;
+        UniquePairDistribution<PartType, GlobalDataType>.PairCalculationFunction m_pairFunction;
 
         public SharedMemoryStackCalculation()
         {
         }
 
-        public SharedMemoryStackCalculation(PairCalculationFunction calculationFunction)
+        public SharedMemoryStackCalculation(UniquePairDistribution<PartType, GlobalDataType>.PairCalculationFunction calculationFunction)
         {
             SetCalculationFunction(calculationFunction);
         }
 
-        public void SetCalculationFunction(PairCalculationFunction calculationFunction)
+        public void SetCalculationFunction(UniquePairDistribution<PartType, GlobalDataType>.PairCalculationFunction calculationFunction)
         {
             m_pairFunction = calculationFunction;
         }

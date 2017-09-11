@@ -7,7 +7,7 @@
         int CurrentElementCount { get; set; }
         bool m_even;
 
-        public LockedRRTDistribution(CorePool<PartType, GlobalDataType> pool) : base(pool)
+        public LockedRRTDistribution(int coreCount) : base(coreCount)
         {
             PairLogic = new RRTPairing();
 
@@ -35,7 +35,7 @@
         {
             for (int step = 0; step < PairLogic.StepCount; step++)
             {
-                for (int pair = threadID; pair < PairLogic.PairCount; pair += CorePool.CoreCount)
+                for (int pair = threadID; pair < PairLogic.PairCount; pair += CoreCount)
                 {
                     int id1 = PairLogic.PairMatrix[step][pair].ID1;
                     int id2 = PairLogic.PairMatrix[step][pair].ID2;

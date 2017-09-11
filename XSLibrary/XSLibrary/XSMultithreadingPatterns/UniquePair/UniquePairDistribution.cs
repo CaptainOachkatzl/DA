@@ -4,19 +4,20 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
     public abstract class UniquePairDistribution<PartType, GlobalDataType> : IDisposable
     {
-        protected CorePool<PartType, GlobalDataType> m_corePool;
-        public CorePool<PartType, GlobalDataType> CorePool { get { return m_corePool; } }
+        public delegate void PairCalculationFunction(PartType element1, PartType element2, GlobalDataType globalData);
 
-        public UniquePairDistribution(CorePool<PartType, GlobalDataType> pool)
+        public abstract int CoreCount { get; }
+
+        public UniquePairDistribution()
         {
-            m_corePool = pool;
         }
+
+        public abstract void SetCalculationFunction(PairCalculationFunction function);
 
         public abstract void Calculate(PartType[] elements, GlobalDataType globalData);
 
         public virtual void Dispose()
         {
-            m_corePool.Dispose();
         }
     }
 }

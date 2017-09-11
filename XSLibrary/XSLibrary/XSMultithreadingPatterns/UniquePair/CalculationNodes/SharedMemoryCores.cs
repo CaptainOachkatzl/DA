@@ -18,7 +18,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
             }
         }
 
-        public void SetCalculationFunction(SharedMemoryStackCalculation<PartType, GlobalDataType>.PairCalculationFunction calculationFunction)
+        public void SetCalculationFunction(UniquePairDistribution<PartType, GlobalDataType>.PairCalculationFunction calculationFunction)
         {
             CalculationLogic.SetCalculationFunction(calculationFunction);
         }

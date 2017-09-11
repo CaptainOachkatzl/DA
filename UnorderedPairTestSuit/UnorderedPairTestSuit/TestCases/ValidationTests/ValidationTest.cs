@@ -7,7 +7,7 @@ namespace UnorderedPairTestSuit
     {
         List<int> m_elementCountList = new List<int>();
 
-        public ValidationTest(CorePool<ValidationDummy, int> corePool) : base(corePool)
+        public ValidationTest(SharedMemoryCores<ValidationDummy, int> corePool) : base(corePool)
         {
             InitializeTests();
         }
@@ -16,7 +16,7 @@ namespace UnorderedPairTestSuit
         {
             m_elementCountList.Add(4);
             m_elementCountList.Add(16);
-            m_elementCountList.Add(100);
+            m_elementCountList.Add(1024);
             m_elementCountList.Add(59);
         }
 

@@ -2,7 +2,7 @@
 {
     public class EvenlyLockedDistribution<PartType, GlobalDataType> : LockedResourceDistribution<PartType, GlobalDataType>
     {
-        public EvenlyLockedDistribution(CorePool<PartType, GlobalDataType> pool) : base(pool)
+        public EvenlyLockedDistribution(int coreCount) : base(coreCount)
         {
         }
 
@@ -17,7 +17,7 @@
                     coreSelect++;   // increment counter
 
                     // execute calulation on selected core
-                    if (coreSelect % CorePool.CoreCount == threadID)    
+                    if (coreSelect % CoreCount == threadID)    
                         CalculatePair(threadID, i, j);
                 }
             }

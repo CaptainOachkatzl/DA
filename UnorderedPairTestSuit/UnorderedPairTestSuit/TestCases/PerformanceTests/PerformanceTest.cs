@@ -11,7 +11,7 @@ namespace UnorderedPairTestSuit
 
         //public string TestName { get; set; } = "Default";
 
-        public PerformanceTest(int loopCount, CorePool<int, int> corePool) : base(corePool)
+        public PerformanceTest(int loopCount, SharedMemoryCores<int, int> corePool) : base(corePool)
         {
             m_loopCount = loopCount;
         }
