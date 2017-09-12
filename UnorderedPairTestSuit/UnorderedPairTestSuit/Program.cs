@@ -24,7 +24,7 @@ namespace UnorderedPairTestSuit
             const int countRun2 = 128;
             const int countRun3 = 1024;
 
-            CorePool<int, int> performancePool = new ActorPool<int, int>(4, false);
+            CorePool<int, int> performancePool = new SystemHandledThreadPool<int, int>(4);
             PerformanceTest<int, int> performanceTest = new PerformanceTest<int, int>(loopCount, performancePool);
 
             // overhead

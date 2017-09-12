@@ -1,6 +1,6 @@
 ﻿namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
-    public class LockedRRTDistribution<PartType, GlobalDataType> : LockedResourceDistribution<PartType, GlobalDataType>
+    public class LockedRRTDistribution<PartType, GlobalDataType> : LockingDistribution<PartType, GlobalDataType>
     {
         RRTPairing PairLogic { get; set; }
 
@@ -31,7 +31,7 @@
             base.Calculate(elements, globalData);
         }
 
-        protected override void Distribution(int threadID)
+        protected override void Distribute(int threadID)
         {
             for (int step = 0; step < PairLogic.StepCount; step++)
             {
@@ -43,7 +43,7 @@
                     if (!m_even && (id1 == CurrentElementCount || id2 == CurrentElementCount))
                         continue;
 
-                    CalculatePair(threadID, id1, id2);
+                    CalculatePair(id1, id2);
                 }
             }
         }

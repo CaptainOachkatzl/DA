@@ -76,10 +76,10 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
         {
             for (int i = 0; i < UsableCoreCount; i++)
             {
-                m_corePool.DistributeCalculation(i, CreateCalculationPair(i, step));
+                CorePool.DistributeCalculation(i, CreateCalculationPair(i, step));
             }
 
-            m_corePool.Synchronize();
+            CorePool.Synchronize();
         }
 
         private PairingData<PartType, GlobalDataType> CreateCalculationPair(int coreID, int step)
@@ -93,7 +93,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
 
         public override void Dispose()
         {
-            m_corePool.Dispose();
+            CorePool.Dispose();
         }
     }
 }

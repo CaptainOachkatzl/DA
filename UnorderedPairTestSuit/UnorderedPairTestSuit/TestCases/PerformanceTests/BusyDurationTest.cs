@@ -1,6 +1,4 @@
-﻿using XSLibrary.MultithreadingPatterns.UniquePair;
-
-namespace UnorderedPairTestSuit
+﻿namespace UnorderedPairTestSuit
 {
     class BusyDuration : TimeMeasurementTest
     {

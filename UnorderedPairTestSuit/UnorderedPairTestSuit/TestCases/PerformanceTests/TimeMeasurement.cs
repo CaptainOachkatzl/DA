@@ -1,6 +1,4 @@
-﻿using UnorderedPairTestSuit;
-
-namespace UnorderedPairTestSuit
+﻿namespace UnorderedPairTestSuit
 {
     abstract class TimeMeasurementTest : UniquePairTest<int, int>
     {

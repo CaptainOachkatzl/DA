@@ -1,12 +1,12 @@
 ﻿namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
-    public class EvenlyLockedDistribution<PartType, GlobalDataType> : LockedResourceDistribution<PartType, GlobalDataType>
+    public class EvenlyLockedDistribution<PartType, GlobalDataType> : LockingDistribution<PartType, GlobalDataType>
     {
         public EvenlyLockedDistribution(int coreCount) : base(coreCount)
         {
         }
 
-        protected override void Distribution(int threadID)
+        protected override void Distribute(int threadID)
         {
             int coreSelect = 0;
 
@@ -18,7 +18,7 @@
 
                     // execute calulation on selected core
                     if (coreSelect % CoreCount == threadID)    
-                        CalculatePair(threadID, i, j);
+                        CalculatePair(i, j);
                 }
             }
         }

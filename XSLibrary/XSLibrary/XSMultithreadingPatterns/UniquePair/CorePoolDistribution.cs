@@ -2,7 +2,7 @@
 {
     public abstract class CorePoolDistribution<PartType, GlobalDataType> : UniquePairDistribution<PartType, GlobalDataType>
     {
-        public CorePool<PartType, GlobalDataType> CorePool { get; private set; }
+        protected CorePool<PartType, GlobalDataType> CorePool { get; private set; }
         public sealed override int CoreCount { get { return CorePool.CoreCount; } }
 
         public CorePoolDistribution(CorePool<PartType, GlobalDataType> pool)
