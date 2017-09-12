@@ -1,6 +1,6 @@
 ﻿namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
-    public class SingleThreadReference<PartType, GlobalDataType> : StaticUniquePairDistribution<PartType, GlobalDataType>
+    public class SingleThreadReference<PartType, GlobalDataType> : StandaloneDistribution<PartType, GlobalDataType>
     {
         public SingleThreadReference() : base(1)
         {

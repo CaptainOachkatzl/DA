@@ -2,13 +2,13 @@
 
 namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
-    public class ThreadSpawning<PartType, GlobalDataType> : SharedMemoryCores<PartType, GlobalDataType>
+    public class ThreadSpawning<PartType, GlobalDataType> : CorePool<PartType, GlobalDataType>
     {
         public ThreadSpawning(int threadCount) : base(threadCount)
         {
         }
 
-        protected override void Distribution(int coreIndex, PairingData<PartType, GlobalDataType> calculationPair)
+        protected override void ExecuteOnCore(int coreIndex, PairingData<PartType, GlobalDataType> calculationPair)
         {
             new Thread(
                 () =>

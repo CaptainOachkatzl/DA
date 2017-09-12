@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
-    public class SystemHandledThreadPool<PartType, GlobalDataType> : SharedMemoryCores<PartType, GlobalDataType>
+    public class SystemHandledThreadPool<PartType, GlobalDataType> : CorePool<PartType, GlobalDataType>
     {
         class ThreadCalculationData
         {
@@ -15,7 +15,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
         {
         }
 
-        protected override void Distribution(int coreIndex, PairingData<PartType, GlobalDataType> calculationPair)
+        protected override void ExecuteOnCore(int coreIndex, PairingData<PartType, GlobalDataType> calculationPair)
         {
             ThreadCalculationData data = new ThreadCalculationData()
             {

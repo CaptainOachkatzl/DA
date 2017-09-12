@@ -2,7 +2,7 @@
 
 namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
-    abstract public class SharedMemoryCores<PartType, GlobalDataType> : CorePool<PartType, GlobalDataType>
+    abstract public class CorePool<PartType, GlobalDataType> : CorePoolBase<PartType, GlobalDataType>
     {
         protected ManualResetEvent[] ResetEvents { get; set; }
         protected SharedMemoryStackCalculation<PartType, GlobalDataType> CalculationLogic { get; private set; }
@@ -10,7 +10,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
         int m_coreCount;
         public override int CoreCount { get { return m_coreCount; } }
 
-        public SharedMemoryCores(int coreCount)
+        public CorePool(int coreCount)
         {
             m_coreCount = coreCount;
 
@@ -26,10 +26,10 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
         sealed public override void DistributeCalculation(int coreIndex, PairingData<PartType, GlobalDataType> calculationPair)
         {
             ResetEvents[coreIndex].Reset();
-            Distribution(coreIndex, calculationPair);
+            ExecuteOnCore(coreIndex, calculationPair);
         }
 
-        protected abstract void Distribution(int coreIndex, PairingData<PartType, GlobalDataType> calculationPair);
+        protected abstract void ExecuteOnCore(int coreIndex, PairingData<PartType, GlobalDataType> calculationPair);
 
         public void SetCalculationFunction(UniquePairDistribution<PartType, GlobalDataType>.PairCalculationFunction calculationFunction)
         {

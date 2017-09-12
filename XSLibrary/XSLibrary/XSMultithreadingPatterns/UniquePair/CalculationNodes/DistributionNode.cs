@@ -1,6 +1,6 @@
 ﻿namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
-    public partial class CorePool<PartType, GlobalDataType>
+    public partial class CorePoolBase<PartType, GlobalDataType>
     {
         public abstract class CalculationCore
         {

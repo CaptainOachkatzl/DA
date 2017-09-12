@@ -7,11 +7,11 @@ namespace UnorderedPairTestSuit
     abstract class MultiAlgorithmTest<PartType, GlobalDataType>
     {
         protected Dictionary<string, UniquePairDistribution<PartType, GlobalDataType>> m_distributions = new Dictionary<string, UniquePairDistribution<PartType, GlobalDataType>>();
-        protected SharedMemoryCores<PartType, GlobalDataType> m_corePool;
+        protected CorePool<PartType, GlobalDataType> m_corePool;
 
         protected Logger Log = new LoggerConsole();
 
-        public MultiAlgorithmTest(SharedMemoryCores<PartType, GlobalDataType> corePool)
+        public MultiAlgorithmTest(CorePool<PartType, GlobalDataType> corePool)
         {
             m_corePool = corePool;
 

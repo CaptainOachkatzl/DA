@@ -1,6 +1,6 @@
 ﻿namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
-    public partial class ActorPool<PartType, GlobalDataType> : SharedMemoryCores<PartType, GlobalDataType>
+    public partial class ActorPool<PartType, GlobalDataType> : CorePool<PartType, GlobalDataType>
     {
         public override int CoreCount { get { return PoolSize; } }
         private int PoolSize { get; set; }
@@ -14,7 +14,7 @@
             InitializeActors();
         }
 
-        protected override void Distribution(int coreIndex, PairingData<PartType, GlobalDataType> calculationPair)
+        protected override void ExecuteOnCore(int coreIndex, PairingData<PartType, GlobalDataType> calculationPair)
         {
             Actors[coreIndex].CalculatePairedData(calculationPair);
         }

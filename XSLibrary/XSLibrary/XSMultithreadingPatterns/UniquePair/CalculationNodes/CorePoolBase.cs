@@ -2,7 +2,7 @@
 
 namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
-    public abstract partial class CorePool<PartType, GlobalDataType> : IDisposable
+    public abstract partial class CorePoolBase<PartType, GlobalDataType> : IDisposable
     {
         public delegate void NodesChangedHandler(object sender, EventArgs e);
         public event NodesChangedHandler OnNodesChanged;

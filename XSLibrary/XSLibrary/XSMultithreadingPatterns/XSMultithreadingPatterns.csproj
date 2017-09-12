@@ -58,7 +58,7 @@
     <Compile Include="UniquePair\RRTPairingLogic.cs" />
     <Compile Include="UniquePair\StackCalculationAlgorithms\SharedMemoryStackCalculation.cs" />
     <Compile Include="UniquePair\DynamicUniquePairDistribution.cs" />
-    <Compile Include="UniquePair\Distributions\RoundRobinTournamentDistribution.cs" />
+    <Compile Include="UniquePair\Distributions\SynchronizedRoundRobinTournamentDistribution.cs" />
     <Compile Include="UniquePair\UniquePairDistribution.cs" />
   </ItemGroup>
   <ItemGroup>

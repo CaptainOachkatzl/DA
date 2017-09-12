@@ -11,7 +11,7 @@ namespace UnorderedPairTestSuit
             System.Console.In.ReadLine();
 
             // validation
-            SharedMemoryCores<ValidationDummy, int> validationPool = new SystemHandledThreadPool<ValidationDummy, int>(4);
+            CorePool<ValidationDummy, int> validationPool = new SystemHandledThreadPool<ValidationDummy, int>(4);
 
             ValidationTest validationTest = new ValidationTest(validationPool);
             validationTest.RunValidation();
@@ -24,7 +24,7 @@ namespace UnorderedPairTestSuit
             const int countRun2 = 128;
             const int countRun3 = 1024;
 
-            SharedMemoryCores<int, int> performancePool = new ActorPool<int, int>(4, false);
+            CorePool<int, int> performancePool = new ActorPool<int, int>(4, false);
             PerformanceTest<int, int> performanceTest = new PerformanceTest<int, int>(loopCount, performancePool);
 
             // overhead

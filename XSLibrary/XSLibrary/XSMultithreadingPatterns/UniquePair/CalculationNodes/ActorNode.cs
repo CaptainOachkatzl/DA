@@ -12,7 +12,7 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
         public static extern int GetCurrentThreadId();
     }
 
-    public partial class ActorPool<PartType, GlobalDataType> : SharedMemoryCores<PartType, GlobalDataType>
+    public partial class ActorPool<PartType, GlobalDataType> : CorePool<PartType, GlobalDataType>
     {
         public class ActorNode : CalculationCore
         {

@@ -2,7 +2,7 @@
 
 namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
-    public class LockedResourceDistribution<PartType, GlobalDataType> : StaticUniquePairDistribution<PartType, GlobalDataType>
+    public class LockedResourceDistribution<PartType, GlobalDataType> : StandaloneDistribution<PartType, GlobalDataType>
     {
         protected PartType[] m_elements;
         protected GlobalDataType m_global;
@@ -18,15 +18,10 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
 
         public override void Calculate(PartType[] elements, GlobalDataType globalData)
         {
-            for (int i = 0; i < CoreCount; i++)
-                m_waitHandles[i].Reset();
+            ResetWaitHandles();
 
             if (m_elements == null || m_elements.Length != elements.Length)
-            {
-                m_locks = new Semaphore[elements.Length];
-                for (int i = 0; i < elements.Length; i++)
-                    m_locks[i] = new Semaphore(1, 1);
-            }
+                ResetLocks(elements.Length);
 
             m_elements = elements;
             m_global = globalData;
@@ -37,6 +32,19 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
             }
 
             WaitHandle.WaitAll(m_waitHandles);
+        }
+
+        private void ResetWaitHandles()
+        {
+            for (int i = 0; i < CoreCount; i++)
+                m_waitHandles[i].Reset();
+        }
+
+        private void ResetLocks(int elementCount)
+        {
+            m_locks = new Semaphore[elementCount];
+            for (int i = 0; i < elementCount; i++)
+                m_locks[i] = new Semaphore(1, 1);
         }
 
         private void ThreadExecution(object wrappedData)
