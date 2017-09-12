@@ -4,7 +4,7 @@ namespace UnorderedPairTestSuit
 {
     class OutputValidation : UniquePairTest<ValidationDummy, int>
     {
-        public OutputValidation() : base()
+        public OutputValidation()
         {
             TestName = "Output Validation";
         }

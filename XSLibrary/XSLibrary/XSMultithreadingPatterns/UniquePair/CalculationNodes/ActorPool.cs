@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace XSLibrary.MultithreadingPatterns.UniquePair
+﻿namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
     public partial class ActorPool<PartType, GlobalDataType> : SharedMemoryCores<PartType, GlobalDataType>
     {
@@ -9,16 +7,16 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
         public bool FixedCores { get; private set; }
         ActorNode[] Actors { get; set; }
 
-        public ActorPool(int size, bool fixedCores) : base(size)
+        public ActorPool(int size, bool fixedCores = false) : base(size)
         {
             PoolSize = size;
             FixedCores = fixedCores;
             InitializeActors();
         }
 
-        public override void DistributeCalculation(int nodeIndex, PairingData<PartType, GlobalDataType> calculationPair)
+        protected override void Distribution(int coreIndex, PairingData<PartType, GlobalDataType> calculationPair)
         {
-            Actors[nodeIndex].CalculatePairedData(calculationPair);
+            Actors[coreIndex].CalculatePairedData(calculationPair);
         }
 
         public override void Dispose()

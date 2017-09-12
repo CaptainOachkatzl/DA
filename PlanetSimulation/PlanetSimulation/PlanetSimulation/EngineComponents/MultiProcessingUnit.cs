@@ -14,7 +14,6 @@ namespace PlanetSimulation.EngineComponents
 
         private UniquePairDistribution<Planet, GameTime> m_pairDistribution;
         private SharedMemoryCores<Planet, GameTime> m_distributionPool;
-        private GraphicCardDistributionPool m_graphicCardPool;
 
         public int CoreCount { get; private set; }
 
@@ -38,9 +37,7 @@ namespace PlanetSimulation.EngineComponents
             CollisionHandler = parent.CollisionHandler;
 
             CoreCount = GetCoreCount();
-            m_graphicCardPool = new GraphicCardDistributionPool();
-            m_distributionPool = new ActorPool<Planet, GameTime>(CoreCount, false);
-            m_pairDistribution = new SynchronizedRRTDistribution<Planet, GameTime>(m_distributionPool);
+            m_pairDistribution = new SynchronizedRRTDistribution<Planet, GameTime>(new ActorPool<Planet, GameTime>(CoreCount));
         }
         public void Close()
         {
@@ -49,9 +46,12 @@ namespace PlanetSimulation.EngineComponents
 
         public void CalculatePlanetMovement(List<Planet> allPlanets, GameTime currentGameTime)
         {
-            m_distributionPool.SetCalculationFunction(GravityHandler.CalculateGravity);
+            // gravity
+            m_pairDistribution.SetCalculationFunction(GravityHandler.CalculateGravity);
             m_pairDistribution.Calculate(allPlanets.ToArray(), currentGameTime);
-            m_distributionPool.SetCalculationFunction(CollisionHandler.CalculateCollision);
+
+            // collisions
+            m_pairDistribution.SetCalculationFunction(CollisionHandler.CalculateCollision);
             m_pairDistribution.Calculate(allPlanets.ToArray(), currentGameTime);
         }
 

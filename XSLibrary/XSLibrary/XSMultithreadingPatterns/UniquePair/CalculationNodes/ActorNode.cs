@@ -77,7 +77,6 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
             public override void CalculatePairedData(PairingData<PartType, GlobalDataType> calculationPair)
             {
                 m_resource = calculationPair;
-                m_resetEvent.Reset();
                 m_lock.Release();
             }
 

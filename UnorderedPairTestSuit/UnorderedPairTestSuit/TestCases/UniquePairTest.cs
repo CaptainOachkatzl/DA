@@ -12,7 +12,7 @@ namespace UnorderedPairTestSuit
         public GlobalType m_globalData { get; protected set; }
 
         public UniquePairTest() : this(null) { }
-        public UniquePairTest(DynamicUniquePairDistribution<PartType, GlobalType> distribution)
+        public UniquePairTest(UniquePairDistribution<PartType, GlobalType> distribution)
         {
             m_log = new LoggerConsole();
 

@@ -5,7 +5,6 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
     public partial class SynchronizedRRTDistribution<PartType, GlobalDataType> : DynamicUniquePairDistribution<PartType, GlobalDataType>
     {
         RRTPairing PairLogic { get; set; }
-        public int CoreCount { get { return m_corePool.CoreCount; } }
         public int StepCount { get { return PairLogic.StepCount; } }
 
         int ElementCount { get; set; }
@@ -85,13 +84,11 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
 
         private PairingData<PartType, GlobalDataType> CreateCalculationPair(int coreID, int step)
         {
-            PairingData <PartType, GlobalDataType> data = new PairingData<PartType, GlobalDataType>(
+            return new PairingData<PartType, GlobalDataType>(
                 Stacks[PairLogic.PairMatrix[step][coreID].ID1],
                 Stacks[PairLogic.PairMatrix[step][coreID].ID2],
                 GlobalData,
                 step == 0);
-
-            return data;
         }
 
         public override void Dispose()

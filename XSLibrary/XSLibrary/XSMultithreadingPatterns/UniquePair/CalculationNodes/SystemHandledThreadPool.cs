@@ -11,21 +11,16 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
             public ManualResetEvent m_resetEvent;
         }
 
-        public override int CoreCount { get { return ThreadCount; } }
-        int ThreadCount { get; set; }
-
         public SystemHandledThreadPool(int threadCount) : base(threadCount)
         {
-            ThreadCount = threadCount;
         }
 
-        public override void DistributeCalculation(int nodeIndex, PairingData<PartType, GlobalDataType> calculationPair)
+        protected override void Distribution(int coreIndex, PairingData<PartType, GlobalDataType> calculationPair)
         {
-            ResetEvents[nodeIndex].Reset();
             ThreadCalculationData data = new ThreadCalculationData()
             {
                 m_pair = calculationPair,
-                m_resetEvent = ResetEvents[nodeIndex]
+                m_resetEvent = ResetEvents[coreIndex]
             };
             ThreadPool.QueueUserWorkItem(CalculationCallback, data);
         }
