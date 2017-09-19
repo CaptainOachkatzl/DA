@@ -2,39 +2,37 @@
 
 namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
-    public partial class SynchronizedRRTDistribution<PartType, GlobalDataType> : CorePoolDistribution<PartType, GlobalDataType>
+    public partial class SynchronizedRRTDistribution<ElementType, GlobalDataType> : CorePoolDistribution<ElementType, GlobalDataType>
     {
         RRTPairing PairLogic { get; set; }
-        public int StepCount { get { return PairLogic.StepCount; } }
 
         int ElementCount { get; set; }
         int UsableCoreCount { get; set; }
 
-        PartType[][] Stacks { get; set; }
+        ElementType[][] Stacks { get; set; }
         GlobalDataType GlobalData { get; set; }
 
-        public SynchronizedRRTDistribution(CorePool<PartType, GlobalDataType> pool) : base(pool)
+        public SynchronizedRRTDistribution(CorePool<ElementType, GlobalDataType> pool) : base(pool)
         {
             PairLogic = new RRTPairing();
         }
 
-        public override void Calculate(PartType[] parts, GlobalDataType globalData)
+        public override void Calculate(ElementType[] elements, GlobalDataType globalData)
         {
-            ElementCount = parts.Length;
+            ElementCount = elements.Length;
 
             int previouslyUsableCores = UsableCoreCount;
             UsableCoreCount = CalculateUsableCoreCount(ElementCount);
 
-            CreateStacks(parts);
-
-            if(previouslyUsableCores != UsableCoreCount)
-                PairLogic.GenerateMatrix(UsableCoreCount * 2);
-
+            CreateStacks(elements);
             GlobalData = globalData;
 
-            for (int i = 0; i < StepCount; i++)
+            if (previouslyUsableCores != UsableCoreCount)
+                PairLogic.GenerateMatrix(UsableCoreCount * 2);
+
+            for (int step = 0; step < PairLogic.StepCount; step++)
             {
-                CalculateStep(i);
+                CalculateStep(step);
             }
         }
 
@@ -43,11 +41,11 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
             return Math.Min(CoreCount, elementCount / 2);
         }
 
-        private void CreateStacks(PartType[] parts)
+        private void CreateStacks(ElementType[] elements)
         {
             int stackCount = UsableCoreCount * 2;
 
-            Stacks = new PartType[stackCount][];
+            Stacks = new ElementType[stackCount][];
 
             int stackSize = ElementCount / stackCount;
             int leftover = ElementCount % stackCount;
@@ -61,13 +59,13 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
                 // while Stacks[2] and Stacks[3] hold only one
                 if (i < leftover)
                 {
-                    Stacks[i] = new PartType[stackSize + 1];
-                    Array.Copy(parts, i * stackSize + i, Stacks[i], 0, stackSize + 1);
+                    Stacks[i] = new ElementType[stackSize + 1];
+                    Array.Copy(elements, i * stackSize + i, Stacks[i], 0, stackSize + 1);
                 }
                 else
                 {
-                    Stacks[i] = new PartType[stackSize];
-                    Array.Copy(parts, i * stackSize + leftover, Stacks[i], 0, stackSize);
+                    Stacks[i] = new ElementType[stackSize];
+                    Array.Copy(elements, i * stackSize + leftover, Stacks[i], 0, stackSize);
                 }
             }
         }
@@ -82,9 +80,9 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
             CorePool.Synchronize();
         }
 
-        private PairingData<PartType, GlobalDataType> CreateCalculationPair(int coreID, int step)
+        private PairingData<ElementType, GlobalDataType> CreateCalculationPair(int coreID, int step)
         {
-            return new PairingData<PartType, GlobalDataType>(
+            return new PairingData<ElementType, GlobalDataType>(
                 Stacks[PairLogic.PairMatrix[step][coreID].ID1],
                 Stacks[PairLogic.PairMatrix[step][coreID].ID2],
                 GlobalData,

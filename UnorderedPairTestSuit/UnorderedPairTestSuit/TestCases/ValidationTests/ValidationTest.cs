@@ -25,6 +25,7 @@ namespace UnorderedPairTestSuit
         public void RunValidation()
         {
             OutputValidation validation = new OutputValidation();
+            validation.m_log = Log;
 
             foreach (int elementCount in m_elementCountList)
             {
