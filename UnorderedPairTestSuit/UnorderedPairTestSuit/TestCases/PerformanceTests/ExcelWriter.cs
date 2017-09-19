@@ -17,6 +17,16 @@ namespace UnorderedPairTestSuit
         XLWorkbook m_workbook;
         IXLWorksheet m_sheet;
 
+        const int startX = 3;
+        const int startY = 6;
+
+        const int endX = startX + 10;
+
+        const int nextTableY = 9;
+
+        int currentX = startX;
+        int currentY = startY;
+
         public ExcelWriter(string filename)
         {
             m_workbook = new XLWorkbook(filename);
@@ -25,8 +35,17 @@ namespace UnorderedPairTestSuit
 
         public void WriteTestData(TestData data)
         {
-            m_sheet.Cell(2, 5).Value = data.m_testName;
+            m_sheet.Cell(currentY, currentX).Value = data.m_minimum.TotalMilliseconds.ToString();
+            m_sheet.Cell(currentY + 1, currentX).Value = data.m_maximum.TotalMilliseconds.ToString();
+            m_sheet.Cell(currentY + 2, currentX).Value = data.m_average.TotalMilliseconds.ToString();
             m_workbook.Save();
+
+            currentX++;
+            if (currentX == endX)
+            {
+                currentX = startX;
+                currentY += nextTableY;
+            }
         }
     }
 }
