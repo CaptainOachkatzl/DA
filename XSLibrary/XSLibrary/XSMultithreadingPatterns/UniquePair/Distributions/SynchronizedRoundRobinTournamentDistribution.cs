@@ -88,10 +88,5 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
                 GlobalData,
                 step == 0);
         }
-
-        public override void Dispose()
-        {
-            CorePool.Dispose();
-        }
     }
 }
