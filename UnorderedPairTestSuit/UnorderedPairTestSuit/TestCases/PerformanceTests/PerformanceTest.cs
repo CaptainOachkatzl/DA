@@ -8,8 +8,7 @@ namespace UnorderedPairTestSuit
     class PerformanceTest<PartType, GlobalType> : MultiAlgorithmTest<int, int>, IDisposable
     {
         int m_loopCount;
-
-        //public string TestName { get; set; } = "Default";
+        public ExcelWriter excelWriter { get; set; }
 
         public PerformanceTest(int loopCount, CorePool<int, int> corePool) : base(corePool)
         {
@@ -56,6 +55,19 @@ namespace UnorderedPairTestSuit
             Log.Log("Maximum duration: " + maximum.TotalMilliseconds + "ms");
             Log.Log("Average duration: " + duration.TotalMilliseconds + "ms");
             Log.Log("");
+
+            if(excelWriter != null)
+            {
+                excelWriter.WriteTestData(
+                    new ExcelWriter.TestData
+                    {
+                        m_testName = test.TestName,
+
+                        m_average = duration,
+                        m_maximum = maximum,
+                        m_minimum = minimum
+                    });
+            }
         }
 
         public void Dispose()
