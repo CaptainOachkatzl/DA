@@ -13,7 +13,6 @@ namespace PlanetSimulation.EngineComponents
         private CollisionHandling CollisionHandler { get; set; }
 
         private UniquePairDistribution<Planet, GameTime> m_pairDistribution;
-        private SharedMemoryCores<Planet, GameTime> m_distributionPool;
 
         public int CoreCount { get; private set; }
 
