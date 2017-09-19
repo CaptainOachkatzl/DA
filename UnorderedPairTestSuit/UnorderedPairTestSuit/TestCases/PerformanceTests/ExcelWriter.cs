@@ -20,7 +20,7 @@ namespace UnorderedPairTestSuit
         public ExcelWriter(string filename)
         {
             m_workbook = new XLWorkbook(filename);
-            m_sheet = m_workbook.Worksheets.Worksheet(0);
+            m_sheet = m_workbook.Worksheets.Worksheet("sheet1");
         }
 
         public void WriteTestData(TestData data)
