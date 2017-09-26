@@ -11,7 +11,7 @@ namespace UnorderedPairTestSuit
         int m_loopCount;
         public ExcelWriter excelWriter { get; set; }
 
-        List<UniquePairTest<int, int>> m_tests = new List<UniquePairTest<int, int>>();
+        List<TimeMeasurementTest> m_tests = new List<TimeMeasurementTest>();
 
         public PerformanceTest(int loopCount, CorePool<int, int> corePool) : base(corePool)
         {
@@ -56,9 +56,9 @@ namespace UnorderedPairTestSuit
                 Log.Log("\n---------------------------------------------------------------------------------");
                 Log.Log("Initializing test run with \"{0}\" distribution.\n", distribution.Key);
                 
-                foreach (UniquePairTest<int, int> test in m_tests)
+                foreach (TimeMeasurementTest test in m_tests)
                 {
-                    Log.Log("Starting \"" + test.TestName + "\" test with \"" + test.m_elements.Length + "\" elements.");
+                    Log.Log("Starting \"" + test.TestName + "\" test with \"" + (test as TimeMeasurementTest).ElementCount + "\" elements.");
                     test.SetDistribution(distribution.Value);
                     RunSingleTest(test);
                 }
