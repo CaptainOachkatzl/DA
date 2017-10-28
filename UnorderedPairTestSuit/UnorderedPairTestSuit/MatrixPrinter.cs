@@ -23,28 +23,12 @@ namespace UnorderedPairTestSuit
             PairLogic.GenerateMatrix(elementCount);
 
             if (cores > 0)
-            {
                 PrintCores(elementCount, cores);
-            }
 
             for (int step = 0; step < PairLogic.StepCount; step++)
             {
-                Log.Log("\n");
-                Log.Log("step " + step + "\t");
-
-                for (int pair = 0; pair < PairLogic.PairCount; pair++)
-                {
-                    int id1 = PairLogic.PairMatrix[step][pair].ID1;
-                    int id2 = PairLogic.PairMatrix[step][pair].ID2;
-
-                    if (id1 < id2)
-                        Log.Log("{ " + id1 + "-" + id2 + " }   ");
-                    else
-                        Log.Log("{ " + id2 + "-" + id1 + " }   ");
-                }
+                PrintStep(step);
             }
-
-            Console.Out.WriteLine();
         }
 
         private void PrintCores(int elementCount, int cores)
@@ -56,6 +40,28 @@ namespace UnorderedPairTestSuit
 
                 Log.Log("\tCore " + i % cores);
             }
+        }
+
+        private void PrintStep(int step)
+        {
+            Log.Log("\n");
+            Log.Log("step " + step + "\t");
+
+            for (int pair = 0; pair < PairLogic.PairCount; pair++)
+            {
+                int id1 = PairLogic.PairMatrix[step][pair].ID1;
+                int id2 = PairLogic.PairMatrix[step][pair].ID2;
+
+                if (id1 < id2)
+                    PrintPair(id1, id2);
+                else
+                    PrintPair(id2, id1);
+            }
+        }
+
+        private void PrintPair(int id1, int id2)
+        {
+            Log.Log("{ " + id1 + "-" + id2 + " }   ");
         }
     }
 }
