@@ -12,7 +12,7 @@ namespace UnorderedPairTestSuit
         public MatrixPrinter()
         {
             PairLogic = new RRTPairing();
-            Log = new LoggerConsole();
+            Log = new LoggerConsolePeriodic();
         }
 
         public void PrintMatrix(int elementCount)
