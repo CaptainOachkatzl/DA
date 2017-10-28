@@ -29,4 +29,12 @@ namespace XSLibrary.Utility
             Console.Out.WriteLine(text);
         }
     }
+
+    public class LoggerConsolePeriodic : Logger
+    {
+        public override void Log(string text)
+        {
+            Console.Out.Write(text);
+        }
+    }
 }

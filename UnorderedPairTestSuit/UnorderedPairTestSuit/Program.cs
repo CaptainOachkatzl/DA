@@ -8,9 +8,9 @@ namespace UnorderedPairTestSuit
         {
             ExcelWriter excelWriter = new ExcelWriter("../../../../testresults.xlsx");
 
-            //MatrixPrinter matrixPrinter = new MatrixPrinter();
-            //matrixPrinter.PrintMatrix(4);
-            //System.Console.In.ReadLine();
+            MatrixPrinter matrixPrinter = new MatrixPrinter();
+            matrixPrinter.PrintMatrix(4);
+            System.Console.In.ReadLine();
 
             // validation
             CorePool<ValidationDummy, int> validationPool = new SystemHandledThreadPool<ValidationDummy, int>(4);
