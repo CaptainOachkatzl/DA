@@ -9,7 +9,7 @@ namespace UnorderedPairTestSuit
             ExcelWriter excelWriter = new ExcelWriter("../../../../testresults.xlsx");
 
             MatrixPrinter matrixPrinter = new MatrixPrinter();
-            matrixPrinter.PrintMatrix(4);
+            matrixPrinter.PrintMatrix(4, 2);
             System.Console.In.ReadLine();
 
             // validation

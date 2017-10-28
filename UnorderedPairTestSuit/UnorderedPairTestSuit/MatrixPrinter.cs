@@ -12,19 +12,25 @@ namespace UnorderedPairTestSuit
         public MatrixPrinter()
         {
             PairLogic = new RRTPairing();
-            Log = new LoggerConsolePeriodic();
+            Log = new LoggerConsolePeriodic()
+            {
+                Prefix = "\t"
+            };
         }
 
-        public void PrintMatrix(int elementCount)
+        public void PrintMatrix(int elementCount, int cores = 0)
         {
             PairLogic.GenerateMatrix(elementCount);
 
+            if (cores > 0)
+            {
+                PrintCores(elementCount, cores);
+            }
+
             for (int step = 0; step < PairLogic.StepCount; step++)
             {
-                if (step > 0)
-                    Log.Log("\n");
-
-                Log.Log("step " + step + "\t\t");
+                Log.Log("\n");
+                Log.Log("step " + step + "\t");
 
                 for (int pair = 0; pair < PairLogic.PairCount; pair++)
                 {
@@ -32,13 +38,24 @@ namespace UnorderedPairTestSuit
                     int id2 = PairLogic.PairMatrix[step][pair].ID2;
 
                     if (id1 < id2)
-                        Log.Log("{ " + id1 + ", " + id2 + " }\t");
+                        Log.Log("{ " + id1 + "-" + id2 + " }   ");
                     else
-                        Log.Log("{ " + id2 + ", " + id1 + " }\t");
+                        Log.Log("{ " + id2 + "-" + id1 + " }   ");
                 }
             }
 
             Console.Out.WriteLine();
+        }
+
+        private void PrintCores(int elementCount, int cores)
+        {
+            for (int i = 0; i < elementCount / 2; i++)
+            {
+                if (i == 0)
+                    Log.Log("\n\t");
+
+                Log.Log("\tCore " + i % cores);
+            }
         }
     }
 }
