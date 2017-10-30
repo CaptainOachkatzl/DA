@@ -1,4 +1,5 @@
-﻿using XSLibrary.MultithreadingPatterns.UniquePair;
+﻿using System;
+using XSLibrary.MultithreadingPatterns.UniquePair;
 
 namespace UnorderedPairTestSuit
 {
@@ -8,9 +9,29 @@ namespace UnorderedPairTestSuit
         {
             ExcelWriter excelWriter = new ExcelWriter("../../../../testresults.xlsx");
 
+            // String combinations
+
+            StringCombinations stringCombinations = new StringCombinations(4);
+
+            const int stringEntryCount = 26;
+            string[] inputStrings = new string[stringEntryCount];
+            for (int i = 0; i < stringEntryCount; i++)
+            {
+                inputStrings[i] = ((char)('A' + i)).ToString();
+            }
+
+            string[] output = stringCombinations.GetCombinations(inputStrings);
+
+            foreach(string str in output)
+            {
+                Console.Out.Write(str + "\t");
+            }
+            Console.In.ReadLine();
+
+            // RRTA matrix
             MatrixPrinter matrixPrinter = new MatrixPrinter();
             matrixPrinter.PrintMatrix(4, 2);
-            System.Console.In.ReadLine();
+            Console.In.ReadLine();
 
             // validation
             CorePool<ValidationDummy, int> validationPool = new SystemHandledThreadPool<ValidationDummy, int>(4);
@@ -31,7 +52,7 @@ namespace UnorderedPairTestSuit
 
             performanceTest.Dispose();
 
-            System.Console.In.ReadLine();
+            Console.In.ReadLine();
         }
     }
 }

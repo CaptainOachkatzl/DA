@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StringCombinations.cs" />
     <Compile Include="MatrixPrinter.cs" />
     <Compile Include="TestCases\MultiAlgorithmTest.cs" />
     <Compile Include="TestCases\PerformanceTests\ExcelWriter.cs" />
@@ -78,6 +79,10 @@
     <ProjectReference Include="..\..\XSLibrary\XSLibrary\XSMultithreadingPatterns\XSMultithreadingPatterns.csproj">
       <Project>{983f5871-11ee-4879-b80e-4529816f0f38}</Project>
       <Name>XSMultithreadingPatterns</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\XSLibrary\XSLibrary\XSThreadSafety\XSThreadSafety.csproj">
+      <Project>{1364168d-0353-49f5-9dac-2a501fd8055a}</Project>
+      <Name>XSThreadSafety</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\XSLibrary\XSLibrary\XSUnitTests\XSUnitTests.csproj">
       <Project>{D1312ADE-2808-4030-A432-75A8406DCEC7}</Project>
