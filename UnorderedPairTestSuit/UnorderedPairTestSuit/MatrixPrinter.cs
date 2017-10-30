@@ -61,7 +61,7 @@ namespace UnorderedPairTestSuit
 
         private void PrintPair(int id1, int id2)
         {
-            Log.Log("{ " + id1 + "-" + id2 + " }   ");
+            Log.Log("{ " + id1 + "-" + id2 + " } ");
         }
     }
 }
