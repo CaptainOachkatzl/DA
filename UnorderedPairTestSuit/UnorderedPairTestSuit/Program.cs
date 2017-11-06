@@ -31,7 +31,7 @@ namespace UnorderedPairTestSuit
             // RRTA matrix
             MatrixPrinter matrixPrinter = new MatrixPrinter();
             matrixPrinter.PrintMatrix(8, 4);
-            System.Console.In.ReadLine();
+            Console.In.ReadLine();
 
             // validation
             CorePool<ValidationDummy, int> validationPool = new SystemHandledThreadPool<ValidationDummy, int>(4);
@@ -40,11 +40,11 @@ namespace UnorderedPairTestSuit
             validationTest.RunValidation();
             validationPool.Dispose();
 
-
+            Console.In.ReadLine();
 
             const int loopCount = 100;
 
-            CorePool<int, int> performancePool = new SystemHandledThreadPool<int, int>(4);
+            CorePool<int, int> performancePool = new SystemHandledThreadPool<int, int>(2);
             PerformanceTest<int, int> performanceTest = new PerformanceTest<int, int>(loopCount, performancePool);
             performanceTest.excelWriter = excelWriter;
 

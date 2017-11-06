@@ -29,6 +29,8 @@ namespace UnorderedPairTestSuit
             {
                 PrintStep(step);
             }
+
+            Log.Log("\n");
         }
 
         private void PrintCores(int elementCount, int cores)

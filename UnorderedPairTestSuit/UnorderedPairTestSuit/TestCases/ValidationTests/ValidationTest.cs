@@ -20,8 +20,6 @@ namespace UnorderedPairTestSuit
             m_elementCountList.Add(59);
         }
 
-
-
         public void RunValidation()
         {
             OutputValidation validation = new OutputValidation();
