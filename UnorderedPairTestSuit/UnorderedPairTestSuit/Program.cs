@@ -44,7 +44,7 @@ namespace UnorderedPairTestSuit
 
             const int loopCount = 100;
 
-            CorePool<int, int> performancePool = new SystemHandledThreadPool<int, int>(2);
+            CorePool<int, int> performancePool = new SystemHandledThreadPool<int, int>(4);
             PerformanceTest<int, int> performanceTest = new PerformanceTest<int, int>(loopCount, performancePool);
             performanceTest.excelWriter = excelWriter;
 
