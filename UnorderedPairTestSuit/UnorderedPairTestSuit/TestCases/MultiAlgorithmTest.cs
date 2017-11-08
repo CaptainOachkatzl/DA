@@ -18,10 +18,6 @@ namespace UnorderedPairTestSuit
             InitializeTests();
         }
 
-
-
-        protected abstract void RunSingleTest(UniquePairTest<PartType, GlobalDataType> test);
-
         private void InitializeTests()
         {
             m_distributions.Add("Single Thread Reference", new SingleThreadReference<PartType, GlobalDataType>());

@@ -65,7 +65,7 @@ namespace UnorderedPairTestSuit
             }
         }
 
-        protected override void RunSingleTest(UniquePairTest<int, int> test)
+        private void RunSingleTest(UniquePairTest<int, int> test)
         {
             test.m_log = new NoLog();
 

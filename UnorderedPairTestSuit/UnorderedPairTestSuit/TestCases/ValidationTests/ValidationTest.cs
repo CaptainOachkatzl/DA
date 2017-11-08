@@ -37,10 +37,5 @@ namespace UnorderedPairTestSuit
                 }
             }
         }
-
-        protected override void RunSingleTest(UniquePairTest<ValidationDummy, int> test)
-        {
-            test.Run();
-        }
     }
 }
