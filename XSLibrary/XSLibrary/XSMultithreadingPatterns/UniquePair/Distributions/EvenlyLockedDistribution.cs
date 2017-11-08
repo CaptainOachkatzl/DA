@@ -6,7 +6,7 @@
         {
         }
 
-        protected override void Distribute(int threadID)
+        protected override void Distribute(int coreID)
         {
             int coreSelect = 0;
 
@@ -17,7 +17,7 @@
                     coreSelect++;   // increment counter
 
                     // execute calulation on selected core
-                    if (coreSelect % CoreCount == threadID)    
+                    if (coreSelect % CoreCount == coreID)    
                         CalculatePair(i, j);
                 }
             }

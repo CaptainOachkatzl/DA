@@ -1,8 +1,8 @@
 ﻿namespace XSLibrary.MultithreadingPatterns.UniquePair
 {
-    public class LockedResourceDistribution<PartType, GlobalDataType> : LockingDistribution<PartType, GlobalDataType>
+    public class ParallelLoopDistribution<ElementType, GlobalDataType> : LockingDistribution<ElementType, GlobalDataType>
     {
-        public LockedResourceDistribution(int coreCount) : base(coreCount)
+        public ParallelLoopDistribution(int coreCount) : base(coreCount)
         {
         }
 

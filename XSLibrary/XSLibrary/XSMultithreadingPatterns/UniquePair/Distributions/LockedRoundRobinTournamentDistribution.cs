@@ -31,11 +31,11 @@
             base.Calculate(elements, globalData);
         }
 
-        protected override void Distribute(int threadID)
+        protected override void Distribute(int coreID)
         {
             for (int step = 0; step < PairLogic.StepCount; step++)
             {
-                for (int pair = threadID; pair < PairLogic.PairCount; pair += CoreCount)
+                for (int pair = coreID; pair < PairLogic.PairCount; pair += CoreCount)
                 {
                     int id1 = PairLogic.PairMatrix[step][pair].ID1;
                     int id2 = PairLogic.PairMatrix[step][pair].ID2;
