@@ -10,7 +10,6 @@ namespace UnorderedPairTestSuit
             ExcelWriter excelWriter = new ExcelWriter("../../../../testresults.xlsx");
 
             // String combinations
-
             StringCombinations stringCombinations = new StringCombinations(4);
 
             const int stringEntryCount = 26;
@@ -42,15 +41,29 @@ namespace UnorderedPairTestSuit
 
             Console.In.ReadLine();
 
+            // performance
             const int loopCount = 100;
 
-            CorePool<int, int> performancePool = new SystemHandledThreadPool<int, int>(4);
-            PerformanceTest<int, int> performanceTest = new PerformanceTest<int, int>(loopCount, performancePool);
-            performanceTest.excelWriter = excelWriter;
+            // dual core
+            CorePool<int, int> dualCorePool = new SystemHandledThreadPool<int, int>(2);
+            PerformanceTest<int, int> dualCoreTest = new PerformanceTest<int, int>(loopCount, dualCorePool);
+            dualCoreTest.excelWriter = excelWriter;
+            dualCoreTest.Run();
+            dualCoreTest.Dispose();
 
-            performanceTest.Run();
+            // tri core
+            CorePool<int, int> triCorePool = new SystemHandledThreadPool<int, int>(3);
+            PerformanceTest<int, int> triCoreTest = new PerformanceTest<int, int>(loopCount, triCorePool);
+            triCoreTest.excelWriter = excelWriter;
+            triCoreTest.Run();
+            triCoreTest.Dispose();
 
-            performanceTest.Dispose();
+            // quad core
+            CorePool<int, int> quadCorePool = new SystemHandledThreadPool<int, int>(4);
+            PerformanceTest<int, int> quadCoreTest = new PerformanceTest<int, int>(loopCount, quadCorePool);
+            quadCoreTest.excelWriter = excelWriter;
+            quadCoreTest.Run();
+            quadCoreTest.Dispose();
 
             Console.In.ReadLine();
         }
