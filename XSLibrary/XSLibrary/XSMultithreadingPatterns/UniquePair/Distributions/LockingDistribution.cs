@@ -6,8 +6,8 @@ namespace XSLibrary.MultithreadingPatterns.UniquePair
     {
         protected PartType[] m_elements;
         protected GlobalDataType m_global;
-        protected Semaphore[] m_locks;
-        protected ManualResetEvent[] m_waitHandles;
+        Semaphore[] m_locks;
+        ManualResetEvent[] m_waitHandles;
 
         public LockingDistribution(int coreCount) : base(coreCount)
         {
