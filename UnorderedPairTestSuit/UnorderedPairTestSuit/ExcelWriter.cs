@@ -25,7 +25,7 @@ namespace UnorderedPairTestSuit
         const int nextTableY = 9;
 
         int currentX = startX;
-        int currentY = startY + nextTableY;
+        int currentY = startY;
 
         public ExcelWriter(string filename)
         {
@@ -46,6 +46,12 @@ namespace UnorderedPairTestSuit
                 currentX = startX;
                 currentY += nextTableY;
             }
+        }
+
+        public void SetWritePosition(int offset = 0)
+        {
+            currentX = startX;
+            currentY = startY + (nextTableY * offset);
         }
     }
 }

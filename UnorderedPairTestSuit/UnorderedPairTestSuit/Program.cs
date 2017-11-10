@@ -47,22 +47,23 @@ namespace UnorderedPairTestSuit
             CorePool<int, int> dualCorePool = new SystemHandledThreadPool<int, int>(2);
             PerformanceTest<int, int> dualCoreTest = new PerformanceTest<int, int>(loopCount, dualCorePool);
             dualCoreTest.excelWriter = excelWriter;
+            excelWriter.SetWritePosition(0);
             dualCoreTest.Run();
             dualCoreTest.Dispose();
 
             // tri core
-            CorePool<int, int> triCorePool = new SystemHandledThreadPool<int, int>(3);
-            PerformanceTest<int, int> triCoreTest = new PerformanceTest<int, int>(loopCount, triCorePool);
-            triCoreTest.excelWriter = excelWriter;
-            triCoreTest.Run();
-            triCoreTest.Dispose();
+            //CorePool<int, int> triCorePool = new SystemHandledThreadPool<int, int>(3);
+            //PerformanceTest<int, int> triCoreTest = new PerformanceTest<int, int>(loopCount, triCorePool);
+            //triCoreTest.excelWriter = excelWriter;
+            //triCoreTest.Run();
+            //triCoreTest.Dispose();
 
-            // quad core
-            CorePool<int, int> quadCorePool = new SystemHandledThreadPool<int, int>(4);
-            PerformanceTest<int, int> quadCoreTest = new PerformanceTest<int, int>(loopCount, quadCorePool);
-            quadCoreTest.excelWriter = excelWriter;
-            quadCoreTest.Run();
-            quadCoreTest.Dispose();
+            //// quad core
+            //CorePool<int, int> quadCorePool = new SystemHandledThreadPool<int, int>(4);
+            //PerformanceTest<int, int> quadCoreTest = new PerformanceTest<int, int>(loopCount, quadCorePool);
+            //quadCoreTest.excelWriter = excelWriter;
+            //quadCoreTest.Run();
+            //quadCoreTest.Dispose();
 
             Console.In.ReadLine();
         }

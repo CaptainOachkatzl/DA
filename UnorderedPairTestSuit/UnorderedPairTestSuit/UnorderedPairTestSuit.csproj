@@ -55,7 +55,7 @@
     <Compile Include="StringCombinations.cs" />
     <Compile Include="MatrixPrinter.cs" />
     <Compile Include="TestCases\MultiAlgorithmTest.cs" />
-    <Compile Include="TestCases\PerformanceTests\ExcelWriter.cs" />
+    <Compile Include="ExcelWriter.cs" />
     <Compile Include="TestCases\PerformanceTests\OverheadTest.cs" />
     <Compile Include="TestCases\PerformanceTests\PerformanceTest.cs" />
     <Compile Include="TestCases\PerformanceTests\BusyDurationTest.cs" />
