@@ -25,12 +25,12 @@ namespace UnorderedPairTestSuit
             {
                 Console.Out.Write(str + "\t");
             }
-            Console.In.ReadLine();
+            //Console.In.ReadLine();
 
             // RRTA matrix
             MatrixPrinter matrixPrinter = new MatrixPrinter();
             matrixPrinter.PrintMatrix(8, 4);
-            Console.In.ReadLine();
+            //Console.In.ReadLine();
 
             // validation
             CorePool<ValidationDummy, int> validationPool = new SystemHandledThreadPool<ValidationDummy, int>(4);
@@ -38,11 +38,10 @@ namespace UnorderedPairTestSuit
             ValidationTest validationTest = new ValidationTest(validationPool);
             validationTest.RunValidation();
             validationPool.Dispose();
-
-            Console.In.ReadLine();
+            //Console.In.ReadLine();
 
             // performance
-            const int loopCount = 10;
+            const int loopCount = 1;
 
             // dual core
             CorePool<int, int> dualCorePool = new SystemHandledThreadPool<int, int>(2);
