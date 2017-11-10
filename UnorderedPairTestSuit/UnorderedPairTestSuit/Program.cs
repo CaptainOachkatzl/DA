@@ -41,7 +41,7 @@ namespace UnorderedPairTestSuit
             //Console.In.ReadLine();
 
             // performance
-            const int loopCount = 1;
+            const int loopCount = 10;
 
             // dual core
             CorePool<int, int> dualCorePool = new SystemHandledThreadPool<int, int>(2);
