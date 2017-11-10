@@ -30,13 +30,13 @@ namespace UnorderedPairTestSuit
             m_tests.Add(new OverheadTest(countRun3));
 
             // fixed duration
-            const int duration = 2;
+            const int duration = 20;
             m_tests.Add(new FixedDurationTest(countRun1, duration));
             m_tests.Add(new FixedDurationTest(countRun2, duration));
 
             // random duration
-            const int rndAverage = 2;
-            const int rndVarianz = 2;
+            const int rndAverage = 20;
+            const int rndVarianz = 10;
             m_tests.Add(new RandomDurationTest(countRun1, rndAverage, rndVarianz));
             m_tests.Add(new RandomDurationTest(countRun2, rndAverage, rndVarianz));
 
