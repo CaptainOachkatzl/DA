@@ -168,6 +168,23 @@ namespace PlanetSimulation
             base.UnloadContent();
         }
 
+        public string GetDistributionName()
+        {
+            switch (MultiProcessing.Distribution)
+            {
+                case MultiProcessingUnit.DistributionMode.ParallelLoop:
+                    return "Parallel Loop";
+                case MultiProcessingUnit.DistributionMode.Modulo:
+                    return "Modulo Split";
+                case MultiProcessingUnit.DistributionMode.LockedRRT:
+                    return "Locked RRT";
+                case MultiProcessingUnit.DistributionMode.SyncedRRT:
+                    return "Synchronized RRT";
+                default:
+                    return "Missing distribution name";
+            }
+        }
+
         protected override void Update(GameTime gameTime)
         {
             CurrentGameTime = gameTime;
@@ -178,7 +195,7 @@ namespace PlanetSimulation
             if (InputKeyboard.KeyNowPressed(Keys.I))
                 StatusText.DrawStatus = !StatusText.DrawStatus;
 
-            if (InputKeyboard.KeyNowPressed(Keys.C))
+            if (InputKeyboard.KeyNowPressed(Keys.H))
                 StatusText.DrawControls = !StatusText.DrawControls;
 
             StatusText.Update();

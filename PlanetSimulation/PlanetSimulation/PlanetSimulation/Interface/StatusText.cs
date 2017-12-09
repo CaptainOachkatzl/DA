@@ -18,6 +18,7 @@ namespace PlanetSimulation.Interface
         string PhysCoreCount { get; set; }
         string LogCoreCount { get; set; }
         string UsedThreads { get; set; }
+        string Distribution { get; set; }
 
         int FPS { get; set; }
         int FrameCounter { get; set; }
@@ -74,7 +75,8 @@ namespace PlanetSimulation.Interface
                 Zoom + "\n" +
                 PhysCoreCount + "\n" +
                 LogCoreCount + "\n" +
-                UsedThreads;
+                UsedThreads + "\n" +
+                Distribution;
         }
 
         private void UpdateDataString()
@@ -92,6 +94,7 @@ namespace PlanetSimulation.Interface
             PhysCoreCount = "Physical cores: " + CurrentUniverse.GetPhysicalCoreCount().ToString();
             LogCoreCount = "Logical cores: " + CurrentUniverse.GetLogicalCoreCount().ToString();
             UsedThreads = "Used threads: " + CurrentUniverse.UsedProcessorCoreCount().ToString();
+            Distribution = "Distribution: " + Parent.GetDistributionName(); 
         }
 
         private void CalculateFPS(float elapsedTime)

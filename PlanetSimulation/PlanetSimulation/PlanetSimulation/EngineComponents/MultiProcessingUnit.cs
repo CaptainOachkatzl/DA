@@ -9,6 +9,25 @@ namespace PlanetSimulation.EngineComponents
 {
     public class MultiProcessingUnit
     {
+        public enum DistributionMode
+        {
+            ParallelLoop,
+            Modulo,
+            LockedRRT,
+            SyncedRRT
+        }
+
+        DistributionMode m_distributionMode;
+        public DistributionMode Distribution
+        {
+            get { return m_distributionMode; }
+            set
+            {
+                m_distributionMode = value;
+                ChangeDistribution();
+            }
+        }
+
         private GravityHandling GravityHandler { get; set; }
         private CollisionHandling CollisionHandler { get; set; }
 
@@ -36,8 +55,12 @@ namespace PlanetSimulation.EngineComponents
             CollisionHandler = parent.CollisionHandler;
 
             CoreCount = GetCoreCount();
-            m_pairDistribution = new SynchronizedRRTDistribution<Planet, GameTime>(new ActorPool<Planet, GameTime>(CoreCount));
+
+            Distribution = DistributionMode.SyncedRRT;
+
+            ChangeDistribution();
         }
+
         public void Close()
         {
             m_pairDistribution.Dispose();
@@ -75,6 +98,25 @@ namespace PlanetSimulation.EngineComponents
                 coreCount += int.Parse(item["NumberOfCores"].ToString());
             }
             return coreCount;
+        }
+
+        private void ChangeDistribution()
+        {
+            switch (Distribution)
+            {
+                case DistributionMode.ParallelLoop:
+                    m_pairDistribution = new ParallelLoopDistribution<Planet, GameTime>(CoreCount);
+                    break;
+                case DistributionMode.Modulo:
+                    m_pairDistribution = new EvenlyLockedDistribution<Planet, GameTime>(CoreCount);
+                    break;
+                case DistributionMode.LockedRRT:
+                    m_pairDistribution = new LockedRRTDistribution<Planet, GameTime>(CoreCount);
+                    break;
+                case DistributionMode.SyncedRRT:
+                    m_pairDistribution = new SynchronizedRRTDistribution<Planet, GameTime>(new SystemHandledThreadPool<Planet, GameTime>(CoreCount));
+                    break;
+            }
         }
     }
 }
