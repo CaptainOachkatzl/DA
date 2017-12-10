@@ -56,8 +56,6 @@ namespace PlanetSimulation
             }
         }
 
-        public bool MultiThreading { get; set; }
-
         public SpriteBatch SpriteBatch { get; private set; }
         public SpriteFont DataFont { get; private set; }
 
@@ -76,7 +74,6 @@ namespace PlanetSimulation
 
             Content.RootDirectory = "Content";
             Pause = true;
-            MultiThreading = true;
             GameGlobals.MaximumProcessorsUsed = maxUsedCores;
 
             m_universes = new Universe[GameGlobals.MaxUniverseCount];
@@ -172,6 +169,8 @@ namespace PlanetSimulation
         {
             switch (MultiProcessing.Distribution)
             {
+                case MultiProcessingUnit.DistributionMode.Sequence:
+                    return "Sequence";
                 case MultiProcessingUnit.DistributionMode.ParallelLoop:
                     return "Parallel Loop";
                 case MultiProcessingUnit.DistributionMode.Modulo:

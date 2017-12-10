@@ -11,6 +11,7 @@ namespace PlanetSimulation.EngineComponents
     {
         public enum DistributionMode
         {
+            Sequence,
             ParallelLoop,
             Modulo,
             LockedRRT,
@@ -34,6 +35,10 @@ namespace PlanetSimulation.EngineComponents
         private UniquePairDistribution<Planet, GameTime> m_pairDistribution;
 
         public int CoreCount { get; private set; }
+        public int UsedCores
+        {
+            get { return m_pairDistribution.CoreCount; }
+        }
 
         int m_phyisicalCoreCount = 0;
         public int PhysicalCoreCount
@@ -56,7 +61,7 @@ namespace PlanetSimulation.EngineComponents
 
             CoreCount = GetCoreCount();
 
-            Distribution = DistributionMode.SyncedRRT;
+            Distribution = DistributionMode.Sequence;
 
             ChangeDistribution();
         }
@@ -104,6 +109,9 @@ namespace PlanetSimulation.EngineComponents
         {
             switch (Distribution)
             {
+                case DistributionMode.Sequence:
+                    m_pairDistribution = new SingleThreadReference<Planet, GameTime>();
+                    break;
                 case DistributionMode.ParallelLoop:
                     m_pairDistribution = new ParallelLoopDistribution<Planet, GameTime>(CoreCount);
                     break;
