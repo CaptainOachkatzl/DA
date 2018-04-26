@@ -31,6 +31,8 @@ namespace PlanetSimulation
             CollisionHandler = parent.CollisionHandler;
             MultiProcessing = parent.MultiProcessing;
             ID = id;
+
+            Reset();
         }
 
 
@@ -219,6 +221,7 @@ namespace PlanetSimulation
         {
             ClearPlanets();
             Camera.ResetCamera();
+            Camera.Zoom = 0.3F;
         }
 
         public void CreateRandomField()
