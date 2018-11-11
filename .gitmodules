@@ -1,0 +1,3 @@
+[submodule "PlanetSimulation"]
+	path = PlanetSimulation
+	url = https://github.com/CaptainOachkatzl/PlanetSimulation
